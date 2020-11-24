@@ -5,7 +5,7 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
     public Rect rect { get; set; }
-    Sprite sprite;
+    public Sprite sprite { get; set; }
     void Start()
     {
         sprite = this.GetComponent<SpriteRenderer>().sprite;

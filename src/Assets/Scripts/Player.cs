@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
         spriteRenderer = this.GetComponent<SpriteRenderer>();
         sprite = this.spriteRenderer.sprite;
         rect = new Rect(this.transform.position, new Vector2(((float)this.sprite.texture.width / 100.0f), ((float)this.sprite.texture.height / 100.0f)));
-        blocks = new List<Block>(FindObjectsOfType<Block>());
+        blocks = FindObjectOfType<Level>().GetComponent<Level>().blocks;
 
         this.moveState = new MovementState(this);
         this.groundState = new GroundedState(this);
@@ -91,7 +91,6 @@ public class Player : MonoBehaviour
                 HitBottom(b);
 
             Debug.DrawRay(b.transform.position, vec);
-            Debug.Log(angle);
         }
         
         if (blockTouchCount == 0 && !(this.groundState is JumpingState))

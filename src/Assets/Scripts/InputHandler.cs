@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/InputHandler.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/InputHandler.inputactions'
 
 using System;
 using System.Collections;
@@ -10,18 +10,17 @@ public class @InputHandler : IInputActionCollection, IDisposable
 {
     public InputActionAsset asset { get; }
 
-    private static InputHandler instance;
+    static InputHandler instance;
 
     public static InputHandler Instance
     {
         get
         {
-            if(instance == null)
+            if (instance == null)
             {
                 instance = new InputHandler();
                 instance.Enable();
             }
-
             return instance;
         }
 
@@ -30,7 +29,7 @@ public class @InputHandler : IInputActionCollection, IDisposable
             instance = value;
         }
     }
-
+    
     public @InputHandler()
     {
         asset = InputActionAsset.FromJson(@"{
