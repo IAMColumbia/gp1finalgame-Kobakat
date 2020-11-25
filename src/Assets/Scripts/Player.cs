@@ -81,16 +81,25 @@ public class Player : MonoBehaviour
         
         if(blockTouchCount > 0)
         {
+            float minAngle = Mathf.Atan(
+                ((this.rect.height / 2.0f) + (b.rect.height / 2.0f)) /
+                ((this.rect.width / 2.0f) + (b.rect.width / 2.0f)));
+
+            minAngle *= Mathf.Rad2Deg;
+            minAngle = 90 - minAngle;
+            Debug.Log(minAngle);
+
             float angle = Vector2.Angle(vec, Vector2.up);
 
-            if (angle < 42.0f)
+            if (angle < minAngle)
                 HitTop(b);
-            else if (angle >= 42.0f && angle <= 135.0f)
+            else if (angle >= minAngle && angle <= 180 - minAngle)
                 HitSide(b, vec.x);
             else
                 HitBottom(b);
 
             Debug.DrawRay(b.transform.position, vec);
+            Debug.Log(angle);
         }
         
         if (blockTouchCount == 0 && !(this.groundState is JumpingState))
