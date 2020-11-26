@@ -2,26 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class MovementState : State, IMoveState
+public class TurningState : State, IMoveState
 {
-    public MovementState(Player sprite) 
+    float startTime;
+    float stopTime;
+
+    public TurningState(Player sprite)
     {
         this.sprite = sprite;
+        startTime = 0;
+        stopTime = 0;
     }
 
     #region State Events
+    
     public sealed override void StateUpdate()
     {
-        CheckIfPlayerIsTryingToTurn();
+        SetStateToMovementAfterTurningFinishes();
 
-        Accelerate();
+        SlowSpeedDown();
         UpdatePosition();
 
         UpdateRectAndCheckForCollisions();
         base.StateUpdate();
     }
 
-    public sealed override void OnStateEnter() { base.OnStateEnter(); }
+    public sealed override void OnStateEnter() 
+    {
+        SetStopTimeBasedOnCurrentSpeed();
+        base.OnStateEnter(); 
+    }
     public sealed override void OnStateExit() { base.OnStateExit(); }
     #endregion
 
@@ -35,19 +45,6 @@ public sealed class MovementState : State, IMoveState
             sprite.transform.position.z);
     }
 
-    void Accelerate()
-    {
-        //Sprite is on the ground, they should have more control
-        if(sprite.groundState is GroundedState)
-            sprite.speed += sprite.xMoveDir * Time.deltaTime * sprite.acceleration;
-
-        //Sprite is airborne, turning is harder
-        else
-            sprite.speed += (sprite.xMoveDir * Time.deltaTime * sprite.acceleration) / sprite.airborneMovementDamp;
-
-        sprite.speed = Mathf.Clamp(sprite.speed, -sprite.maxSpeed, sprite.maxSpeed);
-    }
-
     public void UpdateRectAndCheckForCollisions()
     {
         sprite.rect.position = sprite.transform.position;
@@ -57,22 +54,34 @@ public sealed class MovementState : State, IMoveState
         sprite.rect.position = sprite.transform.position;
     }
 
-    /// <summary>
-    /// If they are, set the state to turning
-    /// </summary>
-    void CheckIfPlayerIsTryingToTurn()
+    void SlowSpeedDown()
+    {
+        sprite.speed = Mathf.Lerp(
+            sprite.speed,
+            0,
+            (Time.time - startTime) / stopTime);
+    }
+
+    void SetStopTimeBasedOnCurrentSpeed()
+    {
+        this.startTime = Time.time;
+        this.stopTime = Mathf.Abs((sprite.speed / (sprite.maxSpeed * sprite.frictionStrength)));
+    }
+
+    void SetStateToMovementAfterTurningFinishes()
     {
         //Check if they're grounded
-        if(sprite.moveState is GroundedState)
+        if (sprite.moveState is GroundedState)
         {
             //Check if their input direction and movement direction conflict
-            if (sprite.xMoveDir > 0 && sprite.speed < 0
-            || sprite.xMoveDir < 0 && sprite.speed > 0)
+            if (sprite.xMoveDir > 0 && sprite.speed > 0
+            || sprite.xMoveDir < 0 && sprite.speed < 0)
             {
                 //Set the state
                 sprite.SetState(ref sprite.moveState, new TurningState(sprite));
             }
         }
     }
+
     #endregion
 }

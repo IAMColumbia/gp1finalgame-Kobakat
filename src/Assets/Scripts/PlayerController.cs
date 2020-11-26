@@ -9,15 +9,43 @@ public class PlayerController : MonoBehaviour
     float input;
     float absoluteInput;
 
+    #region InputHandler Singleton
+    private static InputHandler instance;
+
+    public static InputHandler Instance
+    {
+        get
+        {
+            if(instance == null)
+            {
+                instance = new InputHandler();
+                instance.Enable();
+            }
+
+            return instance;
+        }
+    }
+
+    #endregion
+
+    #region Delegate Subscription Management
     void OnEnable()
     {
-        InputHandler.Instance.Map.Jump.performed += OnJump;
+        Instance.Map.Jump.started += OnJump;
+        Instance.Map.Jump.performed += OnJumpPeak;
+        Instance.Map.Jump.canceled += OnJumpRelease;
     }
 
     void OnDisable()
     {
-        InputHandler.Instance.Map.Jump.performed -= OnJump;  
+        Instance.Map.Jump.started -= OnJump;
+        Instance.Map.Jump.performed -= OnJumpPeak;
+        Instance.Map.Jump.canceled -= OnJumpRelease;
     }
+
+    #endregion
+
+    #region Unity Message Functions
     void Start()
     {
         player = this.GetComponent<Player>();
@@ -26,7 +54,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        input = InputHandler.Instance.Map.Movement.ReadValue<float>();
+        input = Instance.Map.Movement.ReadValue<float>();
         absoluteInput = Mathf.Abs(input);
 
         if(absoluteInput > 0)
@@ -44,18 +72,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Input Event Logic
     void OnJump(InputAction.CallbackContext context)
     {
-        if (player.groundState is GroundedState)
+        if(player.groundState is GroundedState)
             player.SetState(ref player.groundState, new JumpingState(player));
 
-        else
+        else if(player.groundState is FallingState && !player.hasDoubleJumped)
         {
-            if (!player.hasDoubleJumped)
-            {
-                player.SetState(ref player.groundState, new JumpingState(player));
-                player.hasDoubleJumped = true;
-            }
-        }
+            player.SetState(ref player.groundState, new JumpingState(player));
+            player.hasDoubleJumped = true;
+        }      
     }
+
+    void OnJumpPeak(InputAction.CallbackContext context)
+    {
+        if ((player.groundState is JumpingState))
+            player.SetState(ref player.groundState, new RisingState(player));
+
+    }
+
+    void OnJumpRelease(InputAction.CallbackContext context)
+    {
+        if ((player.groundState is JumpingState))
+            player.SetState(ref player.groundState, new RisingState(player));
+    }
+
+    #endregion
 }

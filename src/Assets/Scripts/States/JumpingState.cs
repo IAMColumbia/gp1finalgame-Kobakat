@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The player is currently holding the jump button
+/// Applies an initial burst of speed coupled with a small increase over time
+/// This state switches to the Rising state after the button is released or held long enough
+/// </summary>
 public class JumpingState : AirborneState
 {
     public JumpingState(Player sprite)
@@ -12,9 +17,7 @@ public class JumpingState : AirborneState
     #region State Events
     public sealed override void StateUpdate()
     {
-        ApplyGravity();
-        CheckIfPlayerIsFallingAndChangeStateIfTheyAre();
-
+        ApplyDeltaJump();
         base.StateUpdate();
     }
 
@@ -29,18 +32,13 @@ public class JumpingState : AirborneState
     #region Logic Functions
     void SetUpwardsVelocity()
     {
-        sprite.yMoveDir = sprite.jumpStrength;
+        sprite.yMoveDir = sprite.jumpBurstStrength;
     }
 
-    void ApplyGravity()
+    void ApplyDeltaJump()
     {
-        sprite.yMoveDir -= sprite.gravityStrength;
+        sprite.yMoveDir += sprite.jumpDeltaStrength * Time.deltaTime;
     }
 
-    void CheckIfPlayerIsFallingAndChangeStateIfTheyAre()
-    {
-        if (sprite.yMoveDir < 0)
-            sprite.SetState(ref sprite.groundState, new FallingState(sprite));
-    }
     #endregion
 }

@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FallingState : AirborneState
+/// <summary>
+/// The player is not necessarily falling but they have released the jump button
+/// </summary>
+public class RisingState : AirborneState
 {
-    public FallingState(Player sprite)
+    public RisingState(Player sprite)
     {
         this.sprite = sprite;
     }
@@ -13,6 +16,8 @@ public class FallingState : AirborneState
     public sealed override void StateUpdate()
     {
         ApplyGravity();
+        CheckIfPlayerIsFallingAndChangeStateIfTheyAre();
+
         base.StateUpdate();
     }
 
@@ -26,5 +31,10 @@ public class FallingState : AirborneState
         sprite.yMoveDir -= sprite.gravityStrength * Time.deltaTime;
     }
 
+    void CheckIfPlayerIsFallingAndChangeStateIfTheyAre()
+    {
+        if (sprite.yMoveDir < 0)
+            sprite.SetState(ref sprite.groundState, new FallingState(sprite));
+    }
     #endregion
 }

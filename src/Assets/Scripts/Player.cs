@@ -19,7 +19,8 @@ public class Player : MonoBehaviour
     public float acceleration = 5;
     public float maxSpeed = 5;
     public float frictionStrength = 5;
-    public float jumpStrength = 50;
+    public float jumpBurstStrength = 10;
+    public float jumpDeltaStrength = 0.25f;
     public float gravityStrength = 3;
     public float maxFallSpeed = 5;
     public float airborneMovementDamp = 50;
@@ -38,9 +39,9 @@ public class Player : MonoBehaviour
         sprite = this.spriteRenderer.sprite;
         rect = new Rect(this.transform.position, new Vector2(((float)this.sprite.texture.width / 100.0f), ((float)this.sprite.texture.height / 100.0f)));
         blocks = FindObjectOfType<Level>().GetComponent<Level>().blocks;
-
         this.moveState = new MovementState(this);
         this.groundState = new GroundedState(this);
+        this.speed = 0.1f;
     }
 
     void Update()
@@ -86,8 +87,6 @@ public class Player : MonoBehaviour
                 ((this.rect.width / 2.0f) + (b.rect.width / 2.0f)));
 
             minAngle *= Mathf.Rad2Deg;
-            minAngle = 90 - minAngle;
-            Debug.Log(minAngle);
 
             float angle = Vector2.Angle(vec, Vector2.up);
 
@@ -99,16 +98,16 @@ public class Player : MonoBehaviour
                 HitBottom(b);
 
             Debug.DrawRay(b.transform.position, vec);
-            Debug.Log(angle);
+
         }
         
-        if (blockTouchCount == 0 && !(this.groundState is JumpingState))
+        if (blockTouchCount == 0 && !(this.groundState is JumpingState) && !(this.groundState is RisingState))
             this.SetState(ref groundState, new FallingState(this));
     }
 
     void HitTop(Block b)
     {
-        if(!(this.groundState is JumpingState))
+        if (!(this.groundState is JumpingState) && !(this.groundState is RisingState))
         {
             this.transform.position = new Vector3(
             this.transform.position.x,

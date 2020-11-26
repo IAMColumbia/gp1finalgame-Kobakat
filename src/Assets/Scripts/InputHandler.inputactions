@@ -19,7 +19,7 @@
                     "id": "99e48d79-20e1-46f9-879d-13d5d385e9f7",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Hold(duration=0.2)"
                 },
                 {
                     "name": "Menu",

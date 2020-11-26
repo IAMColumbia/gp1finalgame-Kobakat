@@ -9,27 +9,6 @@ using UnityEngine.InputSystem.Utilities;
 public class @InputHandler : IInputActionCollection, IDisposable
 {
     public InputActionAsset asset { get; }
-
-    static InputHandler instance;
-
-    public static InputHandler Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new InputHandler();
-                instance.Enable();
-            }
-            return instance;
-        }
-
-        private set
-        {
-            instance = value;
-        }
-    }
-    
     public @InputHandler()
     {
         asset = InputActionAsset.FromJson(@"{
@@ -53,7 +32,7 @@ public class @InputHandler : IInputActionCollection, IDisposable
                     ""id"": ""99e48d79-20e1-46f9-879d-13d5d385e9f7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Hold(duration=0.2)""
                 },
                 {
                     ""name"": ""Menu"",

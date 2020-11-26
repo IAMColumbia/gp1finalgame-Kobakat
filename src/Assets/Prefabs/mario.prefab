@@ -105,10 +105,11 @@ MonoBehaviour:
   acceleration: 15
   maxSpeed: 15
   frictionStrength: 0.1
-  jumpStrength: 20
-  gravityStrength: 0.1
+  jumpBurstStrength: 10
+  jumpDeltaStrength: 30
+  gravityStrength: 30
   maxFallSpeed: 20
-  airborneMovementDamp: 1.5
+  airborneMovementDamp: 3
 --- !u!114 &8201176095799207189
 MonoBehaviour:
   m_ObjectHideFlags: 0
