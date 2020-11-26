@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
     public float airborneMovementDamp = 50;
     
     float blockTouchCount;
-    
     SpriteRenderer spriteRenderer;
     Sprite sprite;
     
@@ -48,11 +47,15 @@ public class Player : MonoBehaviour
     {
         moveState.StateUpdate();
         groundState.StateUpdate();
+
+        CheckIfOutOfBounds();
     }
     #endregion
 
     #region Logic Functions
 
+    //If a sprite has an even number of pixels, each side of the block behaves differently
+    //Add a small number to correct that
 
     public void CheckForBlockCollisions()
     {
@@ -63,7 +66,7 @@ public class Player : MonoBehaviour
 
         foreach(Block block in blocks)
         {        
-            if(RectOverlap(this.rect, block.rect))
+            if(Utility.Intersectcs(this.rect, block.rect))
             {
                 Vector2 newVec = rect.position - block.rect.position;
 
@@ -82,14 +85,13 @@ public class Player : MonoBehaviour
         
         if(blockTouchCount > 0)
         {
-            float minAngle = Mathf.Atan(
-                ((this.rect.height / 2.0f) + (b.rect.height / 2.0f)) /
-                ((this.rect.width / 2.0f) + (b.rect.width / 2.0f)));
+            float minAngle = Utility.MinDropAngle(this.rect, b.rect);
 
-            minAngle *= Mathf.Rad2Deg;
+            minAngle = 90 - minAngle;
 
             float angle = Vector2.Angle(vec, Vector2.up);
 
+            //Can/might be abstracted at some point
             if (angle < minAngle)
                 HitTop(b);
             else if (angle >= minAngle && angle <= 180 - minAngle)
@@ -103,6 +105,36 @@ public class Player : MonoBehaviour
         
         if (blockTouchCount == 0 && !(this.groundState is JumpingState) && !(this.groundState is RisingState))
             this.SetState(ref groundState, new FallingState(this));
+    }
+
+    void CheckIfOutOfBounds()
+    {
+        if(this.rect.position.x < Utility.botLeft.x + (this.rect.width / 2.0f))
+        {
+            this.transform.position = new Vector3(
+                Utility.botLeft.x + (this.rect.width / 2.0f),
+                this.transform.position.y,
+                0);
+
+            this.rect.position = this.transform.position;
+
+            this.speed = 0;
+        }
+
+        else if(this.rect.position.x > Utility.botRight.x - (this.rect.width / 2.0f))
+        {
+            this.transform.position = new Vector3(
+                Utility.botRight.x - (this.rect.width / 2.0f),
+                this.transform.position.y,
+                0);
+
+            this.rect.position = this.transform.position;
+
+            this.speed = 0;
+        }
+            
+        if (this.rect.position.y < Utility.botLeft.y - (this.rect.height /2.0f)) { }
+        //player dies here   
     }
 
     void HitTop(Block b)
@@ -168,20 +200,6 @@ public class Player : MonoBehaviour
             this.spriteRenderer.flipX = false;
         else if (this.xMoveDir < 0)
             this.spriteRenderer.flipX = true;
-    }
-
-    bool RectOverlap(Rect a, Rect b)
-    {
-        if (
-            a.x + (a.width / 2.0f) < b.x - (b.width / 2.0f)
-            || a.y + (a.height / 2.0f) < b.y - (b.height / 2.0f)
-            || b.x + (b.width / 2.0f) < a.x - (a.width / 2.0f)        
-            || b.y + (b.height / 2.0f) < a.y - (a.height / 2.0f))
-        {
-            return false;
-        }
-       
-        return true;
     }
 
     public void SetState(ref State whichState, State type)

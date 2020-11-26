@@ -5,15 +5,20 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     #region Properties
-
-    [SerializeField] GameObject blockPrefab;
-    [SerializeField] GameObject playerPrefab;
-
-    [SerializeField] Texture2D[] maps = null;
-    [SerializeField] Vector2 LevelDimensions = new Vector2(28, 10);
-
+    public Vector2 LevelDimensions { get; private set; }
     public List<Block> blocks { get; private set; }
+    
+    public GameObject blockPrefab;
+    public GameObject playerPrefab;
+
+    public Transform playerTransform { get; private set; }
+
+    [SerializeField] GameObject utilityPrefab;
+    [SerializeField] Texture2D[] maps = null;
+    
     Block blockComponent = null;
+    Utility utilityComponent = null;
+    Texture2D currentMap;
 
     Color[] colorMap;
     Color[,] placeMap;
@@ -24,7 +29,7 @@ public class Level : MonoBehaviour
     void Awake()
     {
         SetUpComponents();
-        LoadLevel();
+        LoadLevel(0);
     }
     #endregion
 
@@ -32,15 +37,15 @@ public class Level : MonoBehaviour
 
     public void SetUpComponents()
     {
-        placeMap = new Color[(int)LevelDimensions.x, (int)LevelDimensions.y];
-
-        if (blockPrefab == null)
+        if (!blockPrefab || !playerPrefab || !utilityPrefab)
         {
-            throw new System.Exception("The block manager needs a prefab instance of a block game object assigned in the inpsector");
+            throw new System.Exception("Check that that level has all the required prefab instances assigned via inspector");
         }
 
         blockComponent = blockPrefab.GetComponent<Block>();
         blockComponent.sprite = blockPrefab.GetComponent<SpriteRenderer>().sprite;
+
+        utilityComponent = Instantiate(utilityPrefab, this.transform).GetComponent<Utility>();
 
         blocks = new List<Block>();
     }
@@ -48,9 +53,15 @@ public class Level : MonoBehaviour
     /// <summary>
     /// Loads appropriate blocks into the scene
     /// </summary>
-    public void LoadLevel()
+    public void LoadLevel(int levelIndex)
     {
-        colorMap = maps[0].GetPixels();
+        currentMap = maps[levelIndex];
+        LevelDimensions = new Vector2(currentMap.width, currentMap.height);
+
+        utilityComponent.SetScreenBounds();
+
+        placeMap = new Color[(int)LevelDimensions.x, (int)LevelDimensions.y];
+        colorMap = currentMap.GetPixels();
 
         ConvertMapTo2DArray();
         PlaceBlockUsing2DMap();
@@ -79,7 +90,6 @@ public class Level : MonoBehaviour
     {
         Vector3 placeLocation;
 
-        Vector2 botleft = Camera.main.ScreenToWorldPoint(Vector3.zero);
 
         //TODO update pixel hard coded "100" to a pixel to unit conversion variable.
         Vector2 blockDimensions = new Vector2(
@@ -93,10 +103,10 @@ public class Level : MonoBehaviour
             for (int j = 0; j < (int)LevelDimensions.x; j++)
             {
                 placeLocation = new Vector3(
-                    botleft.x + blockDimensions.x + j * blockDimensions.x,
-                    botleft.y + blockDimensions.y + i * blockDimensions.y,
+                    (Utility.botLeft.x + j * blockDimensions.x) + (blockDimensions.x / 2.0f),
+                    (Utility.botLeft.y + i * blockDimensions.y) + (blockDimensions.y / 2.0f),
                     0);
-
+                
                 GameObject obj;
 
                 if (placeMap[j, i] == Color.black)
@@ -107,7 +117,7 @@ public class Level : MonoBehaviour
 
                 else if (placeMap[j, i] == Color.red)
                 {
-                    Instantiate(playerPrefab, placeLocation, this.transform.rotation, this.transform);
+                    playerTransform = Instantiate(playerPrefab, placeLocation, this.transform.rotation, this.transform).transform;
                 }
             }
         }
