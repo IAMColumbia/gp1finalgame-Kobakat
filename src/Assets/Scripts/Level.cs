@@ -23,14 +23,21 @@ public class Level : MonoBehaviour
     Color[] colorMap;
     Color[,] placeMap;
 
+    int level = 0;
+
     #endregion
 
     #region Unity Event Functions
     void Awake()
     {
         SetUpComponents();
-        LoadLevel(0);
+        LoadLevel(level);
     }
+
+    void OnEnable() { DyingState.PlayerDied += OnPlayerDeath; }
+
+    void OnDisable() { DyingState.PlayerDied -= OnPlayerDeath; }
+
     #endregion
 
     #region Logic Functions
@@ -121,6 +128,22 @@ public class Level : MonoBehaviour
                 }
             }
         }
+    }
+
+    void OnPlayerDeath()
+    {
+        DeleteAllObjects();
+        LoadLevel(level);
+        Camera.main.GetComponent<CameraFollow>().GetTarget();
+    }
+
+    void DeleteAllObjects()
+    {
+        foreach(Transform child in this.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        this.blocks.Clear();
     }
 
     #endregion

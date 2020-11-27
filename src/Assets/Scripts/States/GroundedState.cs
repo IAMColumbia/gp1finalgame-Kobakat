@@ -16,7 +16,11 @@ public class GroundedState : State
         base.StateUpdate();
     }
 
-    public sealed override void OnStateEnter() { base.OnStateEnter(); }
+    public sealed override void OnStateEnter() 
+    {
+        sprite.yMoveDir = 0;
+        base.OnStateEnter(); 
+    }
     public sealed override void OnStateExit() { base.OnStateExit(); }
     #endregion
 }

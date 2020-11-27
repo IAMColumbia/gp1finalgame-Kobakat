@@ -7,20 +7,27 @@
 
 public class Utility : MonoBehaviour
 {
+    
     public static Vector3 botLeft;
     public static Vector3 botRight;
 
+    public static float camHeight;
+    public static float camWidth;
+    
     Level level;
+
+    /// Helps with floating point precision issues
+    const float epsilon = 0.0001f;
 
     public void SetScreenBounds()
     {
         if (level == null)
             level = FindObjectOfType<Level>().GetComponent<Level>();
 
-        float x = Camera.main.orthographicSize * Camera.main.aspect;
-        float y = Camera.main.orthographicSize;
+        camWidth = Camera.main.orthographicSize * Camera.main.aspect;
+        camHeight = Camera.main.orthographicSize;
 
-        botLeft = new Vector3(-x, -y, 0);
+        botLeft = new Vector3(-camWidth, -camHeight, 0);
 
         //We need the size of a block and the number of blocks to determine what X level the level ends at
         float rightBound =
@@ -31,7 +38,7 @@ public class Utility : MonoBehaviour
 
         botRight = new Vector3(
             botLeft.x + rightBound,
-            -y,
+            -camHeight,
             0);
 
     }
@@ -47,10 +54,10 @@ public class Utility : MonoBehaviour
     public static bool Intersectcs(Rect a, Rect b)
     {
         if (
-            a.x + (a.width / 2.0f) < b.x - (b.width / 2.0f)
-            || a.y + (a.height / 2.0f) < b.y - (b.height / 2.0f)
-            || b.x + (b.width / 2.0f) < a.x - (a.width / 2.0f)
-            || b.y + (b.height / 2.0f) < a.y - (a.height / 2.0f))
+            a.x + (a.width / 2.0f) - epsilon < b.x - (b.width / 2.0f)
+            || a.y + (a.height / 2.0f) - epsilon < b.y - (b.height / 2.0f)
+            || b.x + (b.width / 2.0f) + epsilon < a.x - (a.width / 2.0f)
+            || b.y + (b.height / 2.0f) + epsilon < a.y - (a.height / 2.0f))
         {
             return false;
         }

@@ -6,7 +6,7 @@ public class TurningState : State, IMoveState
 {
     float startTime;
     float stopTime;
-
+    const float epsilon = 0.1f;
     public TurningState(Player sprite)
     {
         this.sprite = sprite;
@@ -71,14 +71,14 @@ public class TurningState : State, IMoveState
     void SetStateToMovementAfterTurningFinishes()
     {
         //Check if they're grounded
-        if (sprite.moveState is GroundedState)
+        if (sprite.groundState is GroundedState)
         {
             //Check if their input direction and movement direction conflict
-            if (sprite.xMoveDir > 0 && sprite.speed > 0
-            || sprite.xMoveDir < 0 && sprite.speed < 0)
+            if (sprite.xMoveDir > 0 && sprite.speed >= 0 - epsilon
+            || sprite.xMoveDir < 0 && sprite.speed <= 0 + epsilon)
             {
                 //Set the state
-                sprite.SetState(ref sprite.moveState, new TurningState(sprite));
+                sprite.SetState(ref sprite.moveState, new MovementState(sprite));
             }
         }
     }

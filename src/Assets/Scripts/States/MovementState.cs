@@ -63,7 +63,7 @@ public sealed class MovementState : State, IMoveState
     void CheckIfPlayerIsTryingToTurn()
     {
         //Check if they're grounded
-        if(sprite.moveState is GroundedState)
+        if(sprite.groundState is GroundedState)
         {
             //Check if their input direction and movement direction conflict
             if (sprite.xMoveDir > 0 && sprite.speed < 0

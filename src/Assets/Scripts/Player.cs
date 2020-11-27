@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public List<Block> blocks;
     public State moveState;
     public State groundState;
+    public State gameState;
     public Rect rect;
 
     //Hide these values from the inspector
@@ -15,6 +16,7 @@ public class Player : MonoBehaviour
     public float speed { get; set; }
     public float xMoveDir { get; set; }
     public float yMoveDir { get; set; }
+    public float startLocation { get; set; }
 
     public float acceleration = 5;
     public float maxSpeed = 5;
@@ -24,6 +26,7 @@ public class Player : MonoBehaviour
     public float gravityStrength = 3;
     public float maxFallSpeed = 5;
     public float airborneMovementDamp = 50;
+    public float deathTime = 3;
     
     float blockTouchCount;
     SpriteRenderer spriteRenderer;
@@ -40,15 +43,27 @@ public class Player : MonoBehaviour
         blocks = FindObjectOfType<Level>().GetComponent<Level>().blocks;
         this.moveState = new MovementState(this);
         this.groundState = new GroundedState(this);
+        this.gameState = new PlayState(this);
         this.speed = 0.1f;
     }
 
     void Update()
     {
-        moveState.StateUpdate();
-        groundState.StateUpdate();
+        if(gameState is PlayState)
+        {
+            moveState.StateUpdate();
+            groundState.StateUpdate();
 
-        CheckIfOutOfBounds();
+            UpdateSpriteDirection();
+            CheckIfOutOfBounds();
+        }
+        
+        else
+        {
+            this.gameState.StateUpdate();
+        }
+
+        Debug.Log(moveState);
     }
     #endregion
 
@@ -70,7 +85,7 @@ public class Player : MonoBehaviour
             {
                 Vector2 newVec = rect.position - block.rect.position;
 
-                float newDst = newVec.sqrMagnitude;
+                float newDst = newVec.magnitude;
 
                 if (newDst < dst)
                 {
@@ -99,8 +114,7 @@ public class Player : MonoBehaviour
             else
                 HitBottom(b);
 
-            Debug.DrawRay(b.transform.position, vec);
-
+            Debug.DrawRay(b.rect.position, vec);
         }
         
         if (blockTouchCount == 0 && !(this.groundState is JumpingState) && !(this.groundState is RisingState))
@@ -133,8 +147,8 @@ public class Player : MonoBehaviour
             this.speed = 0;
         }
             
-        if (this.rect.position.y < Utility.botLeft.y - (this.rect.height /2.0f)) { }
-        //player dies here   
+        if (this.rect.position.y < Utility.botLeft.y - (this.rect.height /2.0f) && !(this.groundState is DyingState))
+            this.Die();
     }
 
     void HitTop(Block b)
@@ -194,12 +208,20 @@ public class Player : MonoBehaviour
         this.hasDoubleJumped = false;
     }
 
+    void Die()
+    {
+        this.SetState(ref this.gameState, new DyingState(this));
+    }
+
     public void UpdateSpriteDirection()
     {
-        if (this.xMoveDir > 0)
-            this.spriteRenderer.flipX = false;
-        else if (this.xMoveDir < 0)
-            this.spriteRenderer.flipX = true;
+        if(this.groundState is GroundedState && this.moveState is MovementState)
+        {
+            if (this.speed > 0)
+                this.spriteRenderer.flipX = false;
+            else if (this.speed < 0)
+                this.spriteRenderer.flipX = true;
+        }     
     }
 
     public void SetState(ref State whichState, State type)
@@ -208,7 +230,6 @@ public class Player : MonoBehaviour
         whichState = type;
         whichState.OnStateEnter();
     }
-
     #endregion
 
     #region Debug

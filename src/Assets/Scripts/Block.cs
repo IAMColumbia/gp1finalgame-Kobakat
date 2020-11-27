@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    public Rect rect { get; set; }
+    public Rect rect;
     public Sprite sprite { get; set; }
     void Start()
     {

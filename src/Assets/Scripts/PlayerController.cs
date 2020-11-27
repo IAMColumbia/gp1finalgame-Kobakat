@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
         {
             player.xMoveDir = input;
 
-            if (!(player.moveState is MovementState))
+            if (!(player.moveState is MovementState) && !(player.moveState is TurningState))
                 player.SetState(ref player.moveState, new MovementState(player));
         }
 

@@ -24,6 +24,7 @@ public class FallingState : AirborneState
     void ApplyGravity()
     {
         sprite.yMoveDir -= sprite.gravityStrength * Time.deltaTime;
+        sprite.yMoveDir = Mathf.Clamp(sprite.yMoveDir, -sprite.maxFallSpeed, 5000f);
     }
 
     #endregion
