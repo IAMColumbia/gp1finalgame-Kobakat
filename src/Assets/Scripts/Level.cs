@@ -7,13 +7,14 @@ public class Level : MonoBehaviour
     #region Properties
     public Vector2 LevelDimensions { get; private set; }
     public List<Block> blocks { get; private set; }
+    public Rect goalRect { get; private set; }
+    public Transform playerTransform { get; private set; }
     
     public GameObject blockPrefab;
     public GameObject playerPrefab;
-
-    public Transform playerTransform { get; private set; }
-
+    
     [SerializeField] GameObject utilityPrefab;
+    [SerializeField] GameObject goalPrefab;
     [SerializeField] Texture2D[] maps = null;
     
     Block blockComponent = null;
@@ -34,9 +35,17 @@ public class Level : MonoBehaviour
         LoadLevel(level);
     }
 
-    void OnEnable() { DyingState.PlayerDied += OnPlayerDeath; }
+    void OnEnable() 
+    { 
+        DyingState.PlayerDied += OnPlayerDeath;
+        WinState.PlayerWon += OnPlayerWin;
+    }
 
-    void OnDisable() { DyingState.PlayerDied -= OnPlayerDeath; }
+    void OnDisable() 
+    { 
+        DyingState.PlayerDied -= OnPlayerDeath;
+        WinState.PlayerWon -= OnPlayerWin;
+    }
 
     #endregion
 
@@ -44,7 +53,7 @@ public class Level : MonoBehaviour
 
     public void SetUpComponents()
     {
-        if (!blockPrefab || !playerPrefab || !utilityPrefab)
+        if (!blockPrefab || !playerPrefab || !utilityPrefab || !goalPrefab)
         {
             throw new System.Exception("Check that that level has all the required prefab instances assigned via inspector");
         }
@@ -53,7 +62,6 @@ public class Level : MonoBehaviour
         blockComponent.sprite = blockPrefab.GetComponent<SpriteRenderer>().sprite;
 
         utilityComponent = Instantiate(utilityPrefab, this.transform).GetComponent<Utility>();
-
         blocks = new List<Block>();
     }
 
@@ -126,11 +134,28 @@ public class Level : MonoBehaviour
                 {
                     playerTransform = Instantiate(playerPrefab, placeLocation, this.transform.rotation, this.transform).transform;
                 }
+
+                else if(placeMap[j, i] == Color.green)
+                {
+                    obj = Instantiate(goalPrefab, placeLocation, this.transform.rotation, this.transform);
+                    this.goalRect = obj.GetComponentInChildren<Goal>().rect;
+                }
             }
         }
     }
 
     void OnPlayerDeath()
+    {
+        ResetLevel();
+    }
+
+    void OnPlayerWin()
+    {
+        level++;
+        ResetLevel();
+    }
+
+    void ResetLevel()
     {
         DeleteAllObjects();
         LoadLevel(level);

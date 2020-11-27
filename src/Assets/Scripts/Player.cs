@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public State groundState;
     public State gameState;
     public Rect rect;
+    public Rect goalRect { get; set; }
 
     //Hide these values from the inspector
     public bool hasDoubleJumped { get; set; }
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour
     public float maxFallSpeed = 5;
     public float airborneMovementDamp = 50;
     public float deathTime = 3;
+    public float winTime = 5;
     
     float blockTouchCount;
     SpriteRenderer spriteRenderer;
@@ -37,14 +39,17 @@ public class Player : MonoBehaviour
     #region Unity Message Functions
     void Start()
     {
-        spriteRenderer = this.GetComponent<SpriteRenderer>();
-        sprite = this.spriteRenderer.sprite;
-        rect = new Rect(this.transform.position, new Vector2(((float)this.sprite.texture.width / 100.0f), ((float)this.sprite.texture.height / 100.0f)));
-        blocks = FindObjectOfType<Level>().GetComponent<Level>().blocks;
+        this.spriteRenderer = this.GetComponent<SpriteRenderer>();
+        this.sprite = this.spriteRenderer.sprite;
+        this.rect = new Rect(this.transform.position, new Vector2(((float)this.sprite.texture.width / 100.0f), ((float)this.sprite.texture.height / 100.0f)));
+
         this.moveState = new MovementState(this);
         this.groundState = new GroundedState(this);
         this.gameState = new PlayState(this);
         this.speed = 0.1f;
+
+        this.blocks = this.transform.parent.GetComponent<Level>().blocks;
+        this.goalRect = this.transform.parent.GetComponent<Level>().goalRect;
     }
 
     void Update()
@@ -56,21 +61,26 @@ public class Player : MonoBehaviour
 
             UpdateSpriteDirection();
             CheckIfOutOfBounds();
+
+            CheckForGoalCollision();
+        }     
+        else if(gameState is WinState)
+        {
+            moveState.StateUpdate();
+            groundState.StateUpdate();
+            gameState.StateUpdate();
+            CheckIfOutOfBounds();
         }
-        
+
         else
         {
             this.gameState.StateUpdate();
         }
 
-        Debug.Log(moveState);
     }
     #endregion
 
     #region Logic Functions
-
-    //If a sprite has an even number of pixels, each side of the block behaves differently
-    //Add a small number to correct that
 
     public void CheckForBlockCollisions()
     {
@@ -117,8 +127,35 @@ public class Player : MonoBehaviour
             Debug.DrawRay(b.rect.position, vec);
         }
         
-        if (blockTouchCount == 0 && !(this.groundState is JumpingState) && !(this.groundState is RisingState))
-            this.SetState(ref groundState, new FallingState(this));
+        if (blockTouchCount == 0 
+            && !(this.groundState is JumpingState) 
+            && !(this.groundState is RisingState) 
+            && !(this.groundState is SlidingState))
+                this.SetState(ref groundState, new FallingState(this));
+    }
+    void CheckForGoalCollision()
+    {
+        if(Utility.Intersectcs(this.rect, goalRect))
+        {
+            Win();
+        }
+    }
+    void UpdateSpriteDirection()
+    {
+        if (this.groundState is GroundedState && this.moveState is MovementState)
+        {
+            if (this.speed > 0)
+                this.spriteRenderer.flipX = false;
+            else if (this.speed < 0)
+                this.spriteRenderer.flipX = true;
+        }
+    }
+
+    public void SetState(ref State whichState, State type)
+    {
+        whichState.OnStateExit();
+        whichState = type;
+        whichState.OnStateEnter();
     }
 
     void CheckIfOutOfBounds()
@@ -213,22 +250,9 @@ public class Player : MonoBehaviour
         this.SetState(ref this.gameState, new DyingState(this));
     }
 
-    public void UpdateSpriteDirection()
+    void Win()
     {
-        if(this.groundState is GroundedState && this.moveState is MovementState)
-        {
-            if (this.speed > 0)
-                this.spriteRenderer.flipX = false;
-            else if (this.speed < 0)
-                this.spriteRenderer.flipX = true;
-        }     
-    }
-
-    public void SetState(ref State whichState, State type)
-    {
-        whichState.OnStateExit();
-        whichState = type;
-        whichState.OnStateEnter();
+        this.SetState(ref this.gameState, new WinState(this));
     }
     #endregion
 

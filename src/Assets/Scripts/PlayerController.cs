@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         player = this.GetComponent<Player>();
+        instance.Enable();
     }
 
     // Update is called once per frame
@@ -57,19 +58,23 @@ public class PlayerController : MonoBehaviour
         input = Instance.Map.Movement.ReadValue<float>();
         absoluteInput = Mathf.Abs(input);
 
-        if(absoluteInput > 0)
+        if(player.gameState is PlayState)
         {
-            player.xMoveDir = input;
+            if (absoluteInput > 0)
+            {
+                player.xMoveDir = input;
 
-            if (!(player.moveState is MovementState) && !(player.moveState is TurningState))
-                player.SetState(ref player.moveState, new MovementState(player));
-        }
+                if (!(player.moveState is MovementState) && !(player.moveState is TurningState))
+                    player.SetState(ref player.moveState, new MovementState(player));
+            }
 
-        else
-        {
-            if (!(player.moveState is StoppingState))
-                player.SetState(ref player.moveState, new StoppingState(player));
+            else
+            {
+                if (!(player.moveState is StoppingState))
+                    player.SetState(ref player.moveState, new StoppingState(player));
+            }
         }
+        
     }
 
     #endregion

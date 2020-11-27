@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Block : MonoBehaviour
+public class Goal : MonoBehaviour
 {
     public Rect rect;
     public Sprite sprite { get; set; }
-    void Start()
+    void Awake()
     {
         sprite = this.GetComponent<SpriteRenderer>().sprite;
-        rect = new Rect(this.transform.position, new Vector2(sprite.texture.width / 100.0f, sprite.texture.height / 100.0f));
+        rect = new Rect(this.transform.position, new Vector2(
+            sprite.texture.width / 100.0f * this.transform.localScale.x, 
+            sprite.texture.height / 100.0f * this.transform.localScale.y));
     }
 
     #region Debug
+
     void OnDrawGizmos()
     {
         // Green
@@ -31,5 +34,6 @@ public class Block : MonoBehaviour
     {
         Gizmos.DrawWireCube(rect.position, new Vector3(rect.size.x, rect.size.y, 0.1f));
     }
+
     #endregion
 }
