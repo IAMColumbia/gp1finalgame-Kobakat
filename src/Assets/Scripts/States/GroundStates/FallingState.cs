@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FallingState : AirborneState
+public class FallingState : GroundState
 {
-    public FallingState(Player sprite)
+    Player player;
+    public FallingState(Player Player)
     {
-        this.sprite = sprite;
+        this.player = Player;
     }
 
     #region State Events
@@ -23,8 +24,8 @@ public class FallingState : AirborneState
     #region Logic Functions
     void ApplyGravity()
     {
-        sprite.yMoveDir -= sprite.gravityStrength * Time.deltaTime;
-        sprite.yMoveDir = Mathf.Clamp(sprite.yMoveDir, -sprite.maxFallSpeed, 5000f);
+        player.yMoveDir -= player.gravityStrength * Time.deltaTime;
+        player.yMoveDir = Mathf.Clamp(player.yMoveDir, -player.maxFallSpeed, 5000f);
     }
 
     #endregion

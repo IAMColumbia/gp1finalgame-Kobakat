@@ -9,15 +9,6 @@ using UnityEngine;
 /// This is useful for hitting blocks with mario's head so the block can still "animate" getting hit
 /// </summary>
 
-public interface ICollidable
-{
-    Rect rect { get; set; }
-    Texture2D texture { get; set; }
-    abstract void HitTop();
-    abstract void HitSide();
-    abstract void HitBottom();
-}
-
 public abstract class Block : MonoBehaviour, ICollidable
 {
     public Rect rect { get; set; }

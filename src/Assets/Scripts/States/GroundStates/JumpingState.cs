@@ -7,11 +7,12 @@ using UnityEngine;
 /// Applies an initial burst of speed coupled with a small increase over time
 /// This state switches to the Rising state after the button is released or held long enough
 /// </summary>
-public class JumpingState : AirborneState
+public class JumpingState : GroundState
 {
-    public JumpingState(Player sprite)
+    Player player;
+    public JumpingState(Player Player)
     {
-        this.sprite = sprite;
+        this.player = Player;
     }
 
     #region State Events
@@ -32,12 +33,12 @@ public class JumpingState : AirborneState
     #region Logic Functions
     void SetUpwardsVelocity()
     {
-        sprite.yMoveDir = sprite.jumpBurstStrength;
+        player.yMoveDir = player.jumpBurstStrength;
     }
 
     void ApplyDeltaJump()
     {
-        sprite.yMoveDir += sprite.jumpDeltaStrength * Time.deltaTime;
+        player.yMoveDir += player.jumpDeltaStrength * Time.deltaTime;
     }
 
     #endregion

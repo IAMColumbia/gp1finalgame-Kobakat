@@ -152,14 +152,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockManagerPrefab: {fileID: 2247774897526996124, guid: 907abe4ac5203254a9326aaf10eaf083,
     type: 3}
-  playerPrefab: {fileID: 8665917487378687908, guid: a5d4b8f40ea6c0c4f92469bfc6e97633,
+  entityManagerPrefab: {fileID: 1724137532255417367, guid: d8639619f16946f4ba923ce098266aa8,
     type: 3}
   utilityPrefab: {fileID: 711762813608995237, guid: 0d60dc57d4796664fb1f6028cd01faa9,
     type: 3}
-  goalPrefab: {fileID: 8248743148819027375, guid: 55efad702aae81949915a09cd7f6be33,
-    type: 3}
   maps:
   - {fileID: 2800000, guid: 86337be74a566b44abb411c839fb871d, type: 3}
+  - {fileID: 2800000, guid: 676e9efed96af7b4f91c2a29013782f9, type: 3}
+  - {fileID: 2800000, guid: c20b407eaa38069499f6bb73d54fb65e, type: 3}
 --- !u!4 &1276514519
 Transform:
   m_ObjectHideFlags: 0
@@ -270,3 +270,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a2112d504b66e4fb748e8321899341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}

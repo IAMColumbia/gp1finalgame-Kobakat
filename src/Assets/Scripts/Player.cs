@@ -2,21 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
     #region Properties
     public List<Block> blocks;
+
     public State moveState;
     public State groundState;
     public State gameState;
-    public Rect rect;
     public Rect goalRect { get; set; }
 
     //Hide these values from the inspector
     public bool hasDoubleJumped { get; set; }
-    public float speed { get; set; }
-    public float xMoveDir { get; set; }
-    public float yMoveDir { get; set; }
+
     public float startLocation { get; set; }
 
     public float acceleration = 5;
@@ -29,26 +27,25 @@ public class Player : MonoBehaviour
     public float airborneMovementDamp = 50;
     public float deathTime = 3;
     public float winTime = 5;
-    
-    float blockTouchCount;
-    SpriteRenderer spriteRenderer;
-    Sprite sprite;
+
+    SpriteRenderer spriteRenderer = null;
     
     #endregion
 
     #region Unity Message Functions
-    void Start()
+    protected override void Awake()
     {
-        this.spriteRenderer = this.GetComponent<SpriteRenderer>();
-        this.sprite = this.spriteRenderer.sprite;
-        this.rect = new Rect(this.transform.position, new Vector2(((float)this.sprite.texture.width / 100.0f), ((float)this.sprite.texture.height / 100.0f)));
-
+        base.Awake();
+    }
+    public void Initialize(Rect goal)
+    {       
         this.moveState = new MovementState(this);
         this.groundState = new GroundedState(this);
         this.gameState = new PlayState(this);
+        this.spriteRenderer = this.GetComponent<SpriteRenderer>();
         this.speed = 0.1f;
 
-        this.goalRect = this.transform.parent.GetComponent<Level>().goalRect;
+        this.goalRect = goal;       
     }
 
     void Update()
@@ -68,7 +65,6 @@ public class Player : MonoBehaviour
             moveState.StateUpdate();
             groundState.StateUpdate();
             gameState.StateUpdate();
-            CheckIfOutOfBounds();
         }
 
         else
@@ -81,52 +77,9 @@ public class Player : MonoBehaviour
 
     #region Logic Functions
 
-    public void CheckForBlockCollisions()
+    public override void CheckForFall()
     {
-        Block b = null;
-        Vector2 vec = Vector2.zero;
-        float dst = 10;
-        blockTouchCount = 0;
-
-        foreach(Block block in blocks)
-        {        
-            if(Utility.Intersectcs(this.rect, block.rect))
-            {
-                Vector2 newVec = rect.position - block.rect.position;
-
-                float newDst = newVec.magnitude;
-
-                if (newDst < dst)
-                {
-                    vec = newVec;
-                    dst = newDst;
-                    b = block;
-                }
-
-                blockTouchCount++;                     
-            }
-        }
-        
-        if(blockTouchCount > 0)
-        {
-            float minAngle = Utility.MinDropAngle(this.rect, b.rect);
-
-            minAngle = 90 - minAngle;
-
-            float angle = Vector2.Angle(vec, Vector2.up);
-
-            //Can/might be abstracted at some point
-            if (angle < minAngle)
-                HitTop(b);
-            else if (angle >= minAngle && angle <= 180 - minAngle)
-                HitSide(b, vec.x);
-            else
-                HitBottom(b);
-
-            Debug.DrawRay(b.rect.position, vec);
-        }
-        
-        if (blockTouchCount == 0 
+        if (this.blockTouchCount == 0 
             && !(this.groundState is JumpingState) 
             && !(this.groundState is RisingState) 
             && !(this.groundState is SlidingState))
@@ -150,13 +103,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SetState(ref State whichState, State type)
-    {
-        whichState.OnStateExit();
-        whichState = type;
-        whichState.OnStateEnter();
-    }
-
     void CheckIfOutOfBounds()
     {
         if(this.rect.position.x < Utility.botLeft.x + (this.rect.width / 2.0f))
@@ -166,7 +112,7 @@ public class Player : MonoBehaviour
                 this.transform.position.y,
                 0);
 
-            this.rect.position = this.transform.position;
+            this.rect= new Rect(this.transform.position, this.rect.size);
 
             this.speed = 0;
         }
@@ -178,7 +124,7 @@ public class Player : MonoBehaviour
                 this.transform.position.y,
                 0);
 
-            this.rect.position = this.transform.position;
+            this.rect = new Rect(this.transform.position, this.rect.size);
 
             this.speed = 0;
         }
@@ -187,7 +133,7 @@ public class Player : MonoBehaviour
             this.Die();
     }
 
-    void HitTop(Block b)
+    public override void HitTop(Block b)
     {
         if (!(this.groundState is JumpingState) && !(this.groundState is RisingState))
         {
@@ -200,7 +146,7 @@ public class Player : MonoBehaviour
         }    
     }
 
-    void HitSide(Block b, float dir)
+    public override void HitSide(Block b, float dir)
     {
         //Kill speed
         this.speed = 0;
@@ -224,7 +170,7 @@ public class Player : MonoBehaviour
         }     
     }
 
-    void HitBottom(Block b)
+    public override void HitBottom(Block b)
     {
         if(!(this.groundState is FallingState))
         {

@@ -7,25 +7,22 @@ public class BlockManager : MonoBehaviour
     public List<Block> blocks;
     public List<BlockChunk> chunks;
 
-    public Rect goal;
-
     public int chunkCount = 10;
     public float chunkPadding = 20; //Chunks are defined to the highest block point, of which the player may jump above. Add some padding to keep the player in a chunk 
     #region Block Prefab References
-    [SerializeField] GameObject chunk;
+    [SerializeField] GameObject chunk = null;
 
-    [SerializeField] GameObject groundBlock;
-    [SerializeField] GameObject solidBlock;
-    [SerializeField] GameObject brickBlock;
-    [SerializeField] GameObject questionBlock;
+    [SerializeField] GameObject groundBlock = null;
+    [SerializeField] GameObject solidBlock = null;
+    [SerializeField] GameObject brickBlock = null;
+    [SerializeField] GameObject questionBlock = null;
 
-    [SerializeField] GameObject pipeTopL;
-    [SerializeField] GameObject pipeTopR;
-    [SerializeField] GameObject pipeL;
-    [SerializeField] GameObject pipeR;
+    [SerializeField] GameObject pipeTopL = null;
+    [SerializeField] GameObject pipeTopR = null;
+    [SerializeField] GameObject pipeL = null;
+    [SerializeField] GameObject pipeR = null;
 
-    [SerializeField] GameObject fireBar;
-    [SerializeField] GameObject flagPole;
+    [SerializeField] GameObject fireBar = null;
     #endregion
     
     Texture2D map;
@@ -196,11 +193,13 @@ public class BlockManager : MonoBehaviour
 
     void RemoveAllBlocks()
     {
+        this.blocks.Clear();
+        
         foreach (Transform child in this.transform)
         {
             Destroy(child.gameObject);
         }
-        this.blocks.Clear();
+        
     }
 
     #endregion

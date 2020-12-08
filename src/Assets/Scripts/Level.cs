@@ -10,24 +10,21 @@ public class Level : MonoBehaviour
     public Transform playerTransform { get; private set; }
     
     public GameObject blockManagerPrefab;
-    public GameObject playerPrefab;
+    public GameObject entityManagerPrefab;
     
     [SerializeField] GameObject utilityPrefab;
-    [SerializeField] GameObject goalPrefab;
     [SerializeField] Texture2D[] maps = null;
 
     Utility utilityComponent = null;
     BlockManager blockManagerComponent = null;
-
-    Color[] colorMap;
-    Color[,] placeMap;
-
+    EntityManager entityManagerComponent = null;
 
     #endregion
 
     #region Unity Event Functions
     void Awake()
     {
+        ScoreService.NewGame(this.maps.Length);
         Initialize();
     }
 
@@ -54,24 +51,36 @@ public class Level : MonoBehaviour
 
         blockManagerComponent = Instantiate(blockManagerPrefab, this.transform).GetComponent<BlockManager>();
         blockManagerComponent.BuildNewLevel(maps[ScoreService.Level]);
+
+        entityManagerComponent = Instantiate(entityManagerPrefab, this.transform).GetComponent<EntityManager>();
+        entityManagerComponent.BuildNewLevel(maps[ScoreService.Level], blockManagerComponent.chunks);
     }
 
     void OnPlayerDeath()
     {
-        ResetLevel();
+        ScoreService.PlayerDeath();
+        LoadLevel();
     }
 
     void OnPlayerWin()
     {
-        ResetLevel();
+        ScoreService.PlayerWin();
+        Camera.main.transform.position = new Vector3(0, 0, -1);
+        LoadLevel();
     }
 
-    void ResetLevel()
+    void LoadLevel()
     {
-        Camera.main.GetComponent<CameraFollow>().GetTarget();
+        Wipe();
+        Initialize();
     }
 
-    
-
+    void Wipe()
+    {
+        foreach(Transform child in this.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
     #endregion
 }

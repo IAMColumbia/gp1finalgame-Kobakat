@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StoppingState : State, IMoveState
+public class StoppingState : MoveState
 {
+    Player player;
+
     float startTime;
     float stopTime;
-    public StoppingState(Player sprite) 
+    public StoppingState(Player Player) 
     {
-        this.sprite = sprite;
+        player = Player;
 
         this.startTime = 0;
         this.stopTime = 0;
@@ -18,10 +20,11 @@ public class StoppingState : State, IMoveState
     public sealed override void StateUpdate()
     {
         SlowSpeedDown();
-        UpdatePosition();
 
-        UpdateRectAndCheckForCollisions();
-        base.StateUpdate();
+        base.CheckForChunksCurrentlyIn(player);
+        base.UpdatePosition(player);
+        base.UpdateRectAndCheckForCollisions(player);
+
     }
 
     public sealed override void OnStateEnter() 
@@ -34,27 +37,10 @@ public class StoppingState : State, IMoveState
 
     #region Logic Functions
 
-    public void UpdatePosition()
-    {
-        sprite.transform.position = new Vector3(
-            sprite.transform.position.x + (sprite.speed * Time.deltaTime),
-            sprite.transform.position.y + (sprite.yMoveDir * Time.deltaTime),
-            sprite.transform.position.z);
-    }
-
-    public void UpdateRectAndCheckForCollisions()
-    {
-        sprite.rect.position = sprite.transform.position;
-
-        sprite.CheckForBlockCollisions();
-
-        sprite.rect.position = sprite.transform.position;
-    }
-
     void SlowSpeedDown()
     {
-        sprite.speed = Mathf.Lerp(
-            sprite.speed,
+        player.speed = Mathf.Lerp(
+            player.speed,
             0,
             (Time.time - startTime) / stopTime);
     }
@@ -62,7 +48,7 @@ public class StoppingState : State, IMoveState
     void SetStopTimeBasedOnCurrentSpeed()
     {
         this.startTime = Time.time;
-        this.stopTime = Mathf.Abs((sprite.speed / (sprite.maxSpeed * sprite.frictionStrength)));
+        this.stopTime = Mathf.Abs((player.speed / (player.maxSpeed * player.frictionStrength)));
     }
     #endregion
 }

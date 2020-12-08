@@ -13,6 +13,6 @@ using UnityEngine;
 
 public interface IMoveState
 {
-    void UpdateRectAndCheckForCollisions();
-    void UpdatePosition();
+    void UpdateRectAndCheckForCollisions(Entity Entity);
+    void UpdatePosition(Entity Entity);
 }

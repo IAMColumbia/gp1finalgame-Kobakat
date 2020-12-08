@@ -91,7 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 78031981762034125}
   - component: {fileID: 3995360766133568333}
-  - component: {fileID: 5489010101422736137}
+  - component: {fileID: 6024909521312483669}
   m_Layer: 0
   m_Name: Pole
   m_TagString: Untagged
@@ -163,7 +163,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5489010101422736137
+--- !u!114 &6024909521312483669
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,9 +172,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8005812226307710316}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60307ef5ec91cfd4eabd166c0ab6c9b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 49133494037183a448f8aa45009d1350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chunksToCheckCollisionFor: []
+  entitiesToCheckCollisionFor: []
 --- !u!1 &8248743148819027375
 GameObject:
   m_ObjectHideFlags: 0

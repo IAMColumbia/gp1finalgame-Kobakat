@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayState : State
+public class PlayState : GameState
 {
-    public PlayState(Player sprite)
+    Player player;
+    public PlayState(Player Player)
     {
-        this.sprite = sprite;
+        this.player = Player;
     }
 }

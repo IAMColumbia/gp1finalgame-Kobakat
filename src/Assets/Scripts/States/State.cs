@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 public abstract class State
 {
-    protected Player sprite;
+    protected Entity entity;
 
     #region State Events
     public virtual void StateUpdate() { }

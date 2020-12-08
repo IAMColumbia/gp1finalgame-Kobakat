@@ -4,14 +4,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    Transform target;
-
-    Level level;
-    void Start()
-    {
-        this.level = FindObjectOfType<Level>().GetComponent<Level>();
-        GetTarget();
-    }
+    public Transform target;
 
     void LateUpdate()
     {
@@ -46,10 +39,5 @@ public class CameraFollow : MonoBehaviour
                     -1);
             }
         }      
-    }
-
-    public void GetTarget()
-    {
-        //this.target = level.playerTransform.transform;
     }
 }

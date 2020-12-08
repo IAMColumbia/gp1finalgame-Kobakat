@@ -5,11 +5,12 @@ using UnityEngine;
 /// <summary>
 /// The player is not necessarily falling but they have released the jump button
 /// </summary>
-public class RisingState : AirborneState
+public class RisingState : GroundState
 {
-    public RisingState(Player sprite)
+    Player player;
+    public RisingState(Player Player)
     {
-        this.sprite = sprite;
+        this.player = Player;
     }
 
     #region State Events
@@ -28,14 +29,14 @@ public class RisingState : AirborneState
     #region Logic Functions
     void ApplyGravity()
     {
-        sprite.yMoveDir -= sprite.gravityStrength * Time.deltaTime;
-        sprite.yMoveDir = Mathf.Clamp(sprite.yMoveDir, -sprite.maxFallSpeed, 5000f);
+        player.yMoveDir -= player.gravityStrength * Time.deltaTime;
+        player.yMoveDir = Mathf.Clamp(player.yMoveDir, -player.maxFallSpeed, 5000f);
     }
 
     void CheckIfPlayerIsFallingAndChangeStateIfTheyAre()
     {
-        if (sprite.yMoveDir < 0)
-            sprite.SetState(ref sprite.groundState, new FallingState(sprite));
+        if (player.yMoveDir < 0)
+            player.SetState(ref player.groundState, new FallingState(player));
     }
     #endregion
 }

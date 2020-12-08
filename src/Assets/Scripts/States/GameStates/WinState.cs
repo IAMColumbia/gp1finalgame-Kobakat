@@ -1,12 +1,13 @@
 ﻿using System;
 using UnityEngine;
 
-public class WinState : State
+public class WinState : GameState
 {
+    Player player;
     float startTime;
-    public WinState(Player sprite)
+    public WinState(Player Player)
     {
-        this.sprite = sprite;
+        this.player = Player;
         this.startTime = 0;
     }
 
@@ -37,14 +38,14 @@ public class WinState : State
 
     void FlagLevelLoad()
     {
-        if (Time.time > this.startTime + sprite.winTime)
+        if (Time.time > this.startTime + player.winTime)
             PlayerWon.Invoke();
     }
 
     void SetStates()
     {
-        sprite.SetState(ref sprite.moveState, new GoalWalkState(sprite));
-        sprite.SetState(ref sprite.groundState, new SlidingState(sprite));     
+        player.SetState(ref player.moveState, new GoalWalkState(player));
+        player.SetState(ref player.groundState, new SlidingState(player));     
     }
 
     public static event Action PlayerWon;

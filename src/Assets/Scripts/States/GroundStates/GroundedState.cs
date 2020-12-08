@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundedState : State
+public class GroundedState : GroundState
 {
-    public GroundedState(Player sprite)
+    Player player;
+    public GroundedState(Player Player)
     {
-        this.sprite = sprite;
+        this.player = Player;
     }
 
     #region State Events
     public sealed override void StateUpdate()
     {
-        sprite.yMoveDir = 0;
+        player.yMoveDir = 0;
         base.StateUpdate();
     }
 
     public sealed override void OnStateEnter() 
     {
-        sprite.yMoveDir = 0;
+        player.yMoveDir = 0;
         base.OnStateEnter(); 
     }
     public sealed override void OnStateExit() { base.OnStateExit(); }

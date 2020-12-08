@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoalWalkState : State, IMoveState
+public class GoalWalkState : MoveState
 {
     bool hasHitBlock;
-    public GoalWalkState(Player sprite)
+    Player player;
+
+    public GoalWalkState(Player Player)
     {
-        this.sprite = sprite;
+        this.player = Player;
         this.hasHitBlock = false;
     }
 
     #region State Events
     public sealed override void StateUpdate()
     {
-        UpdatePosition();
-        UpdateRectAndCheckForCollisions();
+        base.CheckForChunksCurrentlyIn(player);
+        base.UpdatePosition(player);
+        base.UpdateRectAndCheckForCollisions(player);
 
         if(!hasHitBlock)
         {
@@ -26,7 +29,6 @@ public class GoalWalkState : State, IMoveState
             }
 
         }
-        base.StateUpdate();
     }
 
     public sealed override void OnStateEnter() 
@@ -39,37 +41,20 @@ public class GoalWalkState : State, IMoveState
 
     #region Logic Functions
 
-    public void UpdatePosition()
-    {
-        sprite.transform.position = new Vector3(
-            sprite.transform.position.x + (sprite.speed * Time.deltaTime),
-            sprite.transform.position.y + (sprite.yMoveDir * Time.deltaTime),
-            sprite.transform.position.z);
-    }
-
-    public void UpdateRectAndCheckForCollisions()
-    {
-        sprite.rect.position = sprite.transform.position;
-
-        sprite.CheckForBlockCollisions();
-
-        sprite.rect.position = sprite.transform.position;
-    }
-
     void KillSpeed()
     {
-        sprite.xMoveDir = 0;
-        sprite.speed = 0;
+        player.xMoveDir = 0;
+        player.speed = 0;
     }
 
     bool CheckIfBlockHit()
     {
-        return (sprite.groundState is GroundedState);
+        return (player.groundState is GroundedState);
     }
     void SetWalkSpeed()
     {
-        sprite.xMoveDir = 1;
-        sprite.speed = 5.0f;
+        player.xMoveDir = 1;
+        player.speed = 5.0f;
     }
 
     #endregion

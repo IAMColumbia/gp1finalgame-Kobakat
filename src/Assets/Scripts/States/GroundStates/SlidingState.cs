@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlidingState : AirborneState
+public class SlidingState : GroundState
 {
-    public SlidingState(Player sprite)
+    Player player;
+    public SlidingState(Player Player)
     {
-        this.sprite = sprite;
+        this.player = Player;
     }
 
     #region State Events
@@ -27,7 +28,7 @@ public class SlidingState : AirborneState
     #region Logic Functions
     void SetYMove()
     {
-        sprite.yMoveDir = -5.0f;
+        player.yMoveDir = -5.0f;
     }
 
     #endregion
