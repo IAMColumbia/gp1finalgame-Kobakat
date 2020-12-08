@@ -37,6 +37,15 @@ public class Player : Entity
     {
         base.Awake();
     }
+    void OnEnable()
+    {
+        ScoreService.TimesUp += Die;
+    }
+
+    void OnDisable()
+    {
+        ScoreService.TimesUp -= Die;
+    }
     public void Initialize(Rect goal)
     {       
         this.moveState = new MovementState(this);
@@ -129,7 +138,7 @@ public class Player : Entity
             this.speed = 0;
         }
             
-        if (this.rect.position.y < Utility.botLeft.y - (this.rect.height /2.0f) && !(this.groundState is DyingState))
+        if (this.rect.position.y < Utility.botLeft.y - (this.rect.height /2.0f))
             this.Die();
     }
 
@@ -192,13 +201,15 @@ public class Player : Entity
 
     void Die()
     {
-        this.SetState(ref this.gameState, new DyingState(this));
+        if(!(this.gameState is DyingState))
+            this.SetState(ref this.gameState, new DyingState(this));
     }
 
     void Win()
     {
         this.SetState(ref this.gameState, new WinState(this));
     }
+
     #endregion
 
     #region Debug

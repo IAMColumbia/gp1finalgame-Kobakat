@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,16 +18,20 @@ public class ScoreService : MonoBehaviour
 
     public static int Lives { get; set; }
     
-    public static int Time { get; set; }
+    public static float Timer { get; set; }
 
     public static int Level { get; set; }
 
+    static bool isTimeOut = false;
     #endregion
 
     #region Unity Event Functions
-    void Awake() { }
 
-    void Update() { UpdateTextUI(); }
+    void Update() 
+    {
+        Countdown();
+        UpdateTextUI(); 
+    }
     #endregion
 
     #region Logic
@@ -36,7 +39,7 @@ public class ScoreService : MonoBehaviour
     {
         Score = 0;
         Lives = startingLives;
-        Time = levelTime;
+        Timer = levelTime;
         Level = 0;
 
         maxLevels = MaxLevels;
@@ -45,8 +48,23 @@ public class ScoreService : MonoBehaviour
     void UpdateTextUI()
     {
         scoreText.text = Score.ToString();
-        livesText.text = Score.ToString();
-        timeText.text = Time.ToString();
+        livesText.text = "Lives: "+ Lives.ToString();
+        timeText.text = ((int)Timer).ToString();
+    }
+
+    void Countdown()
+    {
+        if(!isTimeOut)
+        {
+            Timer -= Time.deltaTime;
+
+            if (Timer < 0)
+            {
+                TimesUp.Invoke();
+                isTimeOut = true;
+            }
+        }
+                         
     }
 
     public static void PlayerDeath()
@@ -58,11 +76,14 @@ public class ScoreService : MonoBehaviour
         {
             NewGame(maxLevels);
         }
+
+        isTimeOut = false;
+        Timer = levelTime;
     }
 
     public static void PlayerWin()
     {
-        Score += pointsPerExtraSecond;
+        Score += pointsPerExtraSecond * (int)Timer;
         scoreOnLevelStart = Score;
 
         Level++;
@@ -71,6 +92,7 @@ public class ScoreService : MonoBehaviour
             Level = 1;
     }
 
+    public static event Action TimesUp;
     #endregion
 
 }
