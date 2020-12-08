@@ -40,3 +40,8 @@ What I should have done is further subclass State with another level of abstract
 where I accidently assign a MoveState into the groundState which causes for some hard debugging. With the player's state machine complete I may consider revisiting this and
 fixing the debt I've created.
 
+## VS
+
+This build refactors the Level component into smaller managers (entities & blocks). These managers are more independent and add higher levels of abstraction
+
+### More notes later
