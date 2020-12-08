@@ -4,8 +4,6 @@ using UnityEngine;
 
 public abstract class MoveState: State, IMoveState
 {
-    
-
     #region State Events
     public override void OnStateEnter() { }
 
@@ -99,6 +97,46 @@ public abstract class MoveState: State, IMoveState
             Entity.transform.position.x + (Entity.speed * Time.deltaTime),
             Entity.transform.position.y + (Entity.yMoveDir * Time.deltaTime),
             Entity.transform.position.z);
+    }
+
+    public virtual void CheckForCollisionWithOtherEntities(Entity entity)
+    {
+        Vector2 vec = Vector2.zero;
+        float dst = 10;
+
+
+        foreach (Entity e in entity.entitiesToCheckCollisionFor)
+        {
+            if(entity != e && e)
+            {
+                if (Utility.Intersectcs(entity.rect, e.rect))
+                {
+                    Vector2 newVec = new Vector2(entity.transform.position.x, entity.transform.position.y) - e.rect.position;
+
+                    float newDst = newVec.magnitude;
+
+                    if (newDst < dst)
+                    {
+                        vec = newVec;
+                        dst = newDst;
+                    }
+
+                    float minAngle = Utility.MinDropAngle(entity.rect, e.rect);
+
+                    minAngle = 90 - minAngle;
+
+                    float angle = Vector2.Angle(vec, Vector2.up);
+
+                    if (angle < minAngle)
+                        entity.HitTopEntity(e);
+                    else if (angle >= minAngle && angle <= 180 - minAngle)
+                        entity.HitSideEntity(e);
+                    else
+                        entity.HitBottomEntity(e);
+                }
+            }
+            
+        }       
     }
 
     #endregion

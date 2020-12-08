@@ -132,15 +132,8 @@ public class EntityManager : MonoBehaviour
     void InitializeAllEntities()
     {
         foreach(Entity entity in this.entities)
-        {
-            if (!entity)
-            {
-                Debug.Log(entities.IndexOf(entity));
-                Debug.Log(entity);
-            }
-           
-            entity.Initialize(chunks, entities);
-                     
+        {         
+            entity.Initialize(chunks, entities);                    
         }
 
         playerComponent.Initialize(this.goal);

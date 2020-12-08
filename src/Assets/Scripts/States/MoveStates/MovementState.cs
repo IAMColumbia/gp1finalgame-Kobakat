@@ -20,7 +20,7 @@ public sealed class MovementState : MoveState
 
         base.UpdatePosition(player);
         base.UpdateRectAndCheckForCollisions(player);
-
+        base.CheckForCollisionWithOtherEntities(player);
     }
 
     public sealed override void OnStateEnter() { base.OnStateEnter(); }

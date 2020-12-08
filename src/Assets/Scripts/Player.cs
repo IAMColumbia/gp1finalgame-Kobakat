@@ -5,8 +5,6 @@ using UnityEngine;
 public class Player : Entity
 {
     #region Properties
-    public List<Block> blocks;
-
     public State moveState;
     public State groundState;
     public State gameState;
@@ -46,6 +44,7 @@ public class Player : Entity
     {
         ScoreService.TimesUp -= Die;
     }
+
     public void Initialize(Rect goal)
     {       
         this.moveState = new MovementState(this);
@@ -191,6 +190,28 @@ public class Player : Entity
                 b.rect.position.y - (b.rect.height / 2.0f) - (rect.height / 2.0f),
                 this.transform.position.z);
         }    
+    }
+
+    public override void HitBottomEntity(Entity e)
+    {
+        if (e is Goomba)
+            Die();
+    }
+
+    public override void HitSideEntity(Entity e)
+    {
+        if (e is Goomba)
+            Die();
+    }
+
+    public override void HitTopEntity(Entity e)
+    {
+        if (e is Goomba)
+        {
+            Destroy(e.gameObject);
+
+            this.yMoveDir = 15;
+        }           
     }
 
     void Land()

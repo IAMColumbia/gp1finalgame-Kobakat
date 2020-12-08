@@ -38,6 +38,9 @@ public abstract class Entity : MonoBehaviour, ICollidable
     public virtual void HitTop(Block b) { }
     public virtual void HitSide(Block b, float side) { }
     public virtual void HitBottom(Block b) { }
+    public virtual void HitTopEntity(Entity e) { }
+    public virtual void HitSideEntity(Entity e) { }
+    public virtual void HitBottomEntity(Entity e) { }
 
     public virtual void CheckForFall() { }
 

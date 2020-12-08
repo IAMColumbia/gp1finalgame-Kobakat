@@ -24,6 +24,7 @@ public class StoppingState : MoveState
         base.CheckForChunksCurrentlyIn(player);
         base.UpdatePosition(player);
         base.UpdateRectAndCheckForCollisions(player);
+        base.CheckForCollisionWithOtherEntities(player);
 
     }
 

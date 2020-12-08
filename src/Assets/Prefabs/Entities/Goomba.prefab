@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 129667343847677141}
   - component: {fileID: 4210774058806450914}
+  - component: {fileID: -2985368783930359734}
   m_Layer: 0
   m_Name: Goomba
   m_TagString: Untagged
@@ -81,3 +82,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-2985368783930359734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4225548827846237723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07bf8139611a41d49bfda86d902e603f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chunksToCheckCollisionFor: []
+  entitiesToCheckCollisionFor: []
+  chunksCurrentlyIn: []
+  maxSpeed: 5
+  maxFallSpeed: 20
+  gravityStrength: 30
