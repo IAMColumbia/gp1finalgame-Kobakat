@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Block : MonoBehaviour
+public class BlockChunk : MonoBehaviour
 {
-    public Rect rect;
-    public Sprite sprite { get; set; }
-    void Start()
+    public List<Block> blocks { get; set; }
+    public Rect rect { get; set; }
+    public void Initialize(float width, float height)
     {
-        sprite = this.GetComponent<SpriteRenderer>().sprite;
-        rect = new Rect(this.transform.position, new Vector2(sprite.texture.width / 100.0f, sprite.texture.height / 100.0f));
+        this.rect = new Rect(this.transform.position, new Vector2(width, height));
+        this.blocks = new List<Block>();
     }
 
     #region Debug
+#if UNITY_EDITOR
     void OnDrawGizmos()
     {
         // Green
@@ -31,5 +32,6 @@ public class Block : MonoBehaviour
     {
         Gizmos.DrawWireCube(rect.position, new Vector3(rect.size.x, rect.size.y, 0.1f));
     }
+#endif
     #endregion
 }

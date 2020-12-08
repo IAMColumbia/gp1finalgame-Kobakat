@@ -48,7 +48,6 @@ public class Player : MonoBehaviour
         this.gameState = new PlayState(this);
         this.speed = 0.1f;
 
-        this.blocks = this.transform.parent.GetComponent<Level>().blocks;
         this.goalRect = this.transform.parent.GetComponent<Level>().goalRect;
     }
 
@@ -172,10 +171,10 @@ public class Player : MonoBehaviour
             this.speed = 0;
         }
 
-        else if(this.rect.position.x > Utility.botRight.x - (this.rect.width / 2.0f))
+        else if(this.rect.position.x > Utility.topRight.x - (this.rect.width / 2.0f))
         {
             this.transform.position = new Vector3(
-                Utility.botRight.x - (this.rect.width / 2.0f),
+                Utility.topRight.x - (this.rect.width / 2.0f),
                 this.transform.position.y,
                 0);
 

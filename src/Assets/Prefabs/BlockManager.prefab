@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2247774897526996124
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2247774897526996114}
+  - component: {fileID: 2247774897526996125}
+  m_Layer: 0
+  m_Name: BlockManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2247774897526996114
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2247774897526996124}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2247774897526996125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2247774897526996124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68a530147bf6e9543a14c3bf514953a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blocks: []
+  chunks: []
+  chunkCount: 10
+  chunk: {fileID: 8478349508389696904, guid: ce1b59b04c92a6c41a22ef170e84cc39, type: 3}
+  groundBlock: {fileID: 4015285376319633973, guid: 86c9c413edbd3fd4593d7672b2b13a0a,
+    type: 3}
+  solidBlock: {fileID: 2832318200832766, guid: de27a0469277e494d9c26ee490ae1b7c, type: 3}
+  brickBlock: {fileID: 6832861458635474226, guid: 33a6c9355ac72d14b8c5c823441503d1,
+    type: 3}
+  questionBlock: {fileID: 2434330886554917939, guid: 201d284f70bceef45a2d6e08b812de9c,
+    type: 3}
+  pipeTopL: {fileID: 7144553860726198803, guid: b2410dee56823c846825044333d58880,
+    type: 3}
+  pipeTopR: {fileID: 1735497645733225619, guid: f2edcfbdd605ed343996526e5f728a29,
+    type: 3}
+  pipeL: {fileID: 439150512925775137, guid: 18a604424a85cd943b918d931fd30e39, type: 3}
+  pipeR: {fileID: 6184061586438326813, guid: a959c24d176a36548b6da122962d06bf, type: 3}
+  fireBar: {fileID: 9191284052212526057, guid: 9dd615fc6b1e7f04280dddf0984aacfc, type: 3}
+  flagPole: {fileID: 8248743148819027375, guid: 55efad702aae81949915a09cd7f6be33,
+    type: 3}

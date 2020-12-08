@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// Container Class holding logic functions/properties revolvng around game space
@@ -7,22 +8,37 @@
 
 public class Utility : MonoBehaviour
 {
-    
     public static Vector3 botLeft;
-    public static Vector3 botRight;
+    public static Vector3 topRight;
 
     public static float camHeight;
     public static float camWidth;
-    
-    Level level;
+
+    //Benefit - One variable to control game "scale"
+    //Drawback - this forces the entire project to use one conversion rate
+    public static float pixelsPerUnit = 100.0f;
+
+    //The dimensions of a block Identity, in pixels.
+    //Hacky solution but ensures any prefab can change without ruining the game
+    public static Vector2 blockIdentity = new Vector2(128, 128);
 
     /// Helps with floating point precision issues
-    const float epsilon = 0.0001f;
+    public static float epsilon { get; private set; } = 0.001f;
 
-    public void SetScreenBounds()
+    Vector2 levelDimensions;
+
+    #region Instance Setup
+    public void Initialize(Texture2D Map)
+    {   
+        SetScreenBounds(Map);
+
+        colorDictionary = new Dictionary<string, string>();
+        this.FillDictionary();
+    }
+
+    void SetScreenBounds(Texture2D Map)
     {
-        if (level == null)
-            level = FindObjectOfType<Level>().GetComponent<Level>();
+        this.levelDimensions = new Vector2(Map.width, Map.height);
 
         camWidth = Camera.main.orthographicSize * Camera.main.aspect;
         camHeight = Camera.main.orthographicSize;
@@ -30,18 +46,16 @@ public class Utility : MonoBehaviour
         botLeft = new Vector3(-camWidth, -camHeight, 0);
 
         //We need the size of a block and the number of blocks to determine what X level the level ends at
-        float rightBound =
-            level.LevelDimensions.x *
-            ((level.blockPrefab.GetComponent<SpriteRenderer>().sprite.texture.width / 100.0f)
-            * level.blockPrefab.transform.localScale.x);
-            
+        float rightBound = levelDimensions.x * blockIdentity.x / pixelsPerUnit;
 
-        botRight = new Vector3(
+        topRight = new Vector3(
             botLeft.x + rightBound,
-            -camHeight,
+            levelDimensions.y * (blockIdentity.y / pixelsPerUnit) + botLeft.y,
             0);
 
     }
+
+    #endregion
 
     #region Rect Math
     /// <summary>
@@ -86,6 +100,38 @@ public class Utility : MonoBehaviour
         minAngle *= Mathf.Rad2Deg;
 
         return minAngle;
+    }
+    #endregion
+
+    #region Color Dictionary
+
+    public static Dictionary<string, string> colorDictionary;
+
+    void FillDictionary()
+    {      
+        //Boring Blocks
+        colorDictionary.Add("Black", "000000"); //Ground block
+        colorDictionary.Add("Gray", "808080"); //Solid block
+        
+        //Interesting Blocks
+        colorDictionary.Add("Steel", "404040"); //Fire bar
+        colorDictionary.Add("Yellow", "FFFF00"); //Question Block
+        colorDictionary.Add("Green", "00FF00"); //Flag pole
+        //BreakableBlock
+        colorDictionary.Add("Blue", "0000FF");
+
+        //Entities
+        colorDictionary.Add("Red", "FF0000"); //Mario
+        colorDictionary.Add("Brown", "331900"); //Goomba
+        colorDictionary.Add("Gold", "999900"); //Coin
+
+        //Pipe blocks
+        //This can be changed later to have an algorithm determine what pipe blocks should be what
+        //For now the lever designers can suffer
+        colorDictionary.Add("PipeTopL", "00CC00");
+        colorDictionary.Add("PipeTopR", "33FF33");
+        colorDictionary.Add("PipeL", "66FF66");
+        colorDictionary.Add("PipeR", "99FF99");
     }
     #endregion
 }

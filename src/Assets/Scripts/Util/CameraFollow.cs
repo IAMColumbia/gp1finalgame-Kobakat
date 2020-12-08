@@ -30,10 +30,10 @@ public class CameraFollow : MonoBehaviour
                     -1);
             }
 
-            else if (this.transform.position.x > Utility.botRight.x - Utility.camWidth)
+            else if (this.transform.position.x > Utility.topRight.x - Utility.camWidth)
             {
                 this.transform.position = new Vector3(
-                    Utility.botRight.x - Utility.camWidth,
+                    Utility.topRight.x - Utility.camWidth,
                     this.transform.position.y,
                     -1);
             }
@@ -50,6 +50,6 @@ public class CameraFollow : MonoBehaviour
 
     public void GetTarget()
     {
-        this.target = level.playerTransform.transform;
+        //this.target = level.playerTransform.transform;
     }
 }
