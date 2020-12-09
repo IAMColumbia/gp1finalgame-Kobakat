@@ -40,8 +40,46 @@ What I should have done is further subclass State with another level of abstract
 where I accidently assign a MoveState into the groundState which causes for some hard debugging. With the player's state machine complete I may consider revisiting this and
 fixing the debt I've created.
 
+
+
+
+
+
 ## VS
 
-This build refactors the Level component into smaller managers (entities & blocks). These managers are more independent and add higher levels of abstraction
+This build refactors the Level component into smaller managers (entities & blocks). These managers are more independent and add SoC.
 
-### More notes later
+### General Structure
+
+I initially chose Unity because I disliked dealing with monogame's load order. However by implementing managers and having dynamically loaded levels I was forced to deal with
+load orders anyways. Level exists in the the scene hierarchy and is instantiates three prefabs it has references to: Util, BlockManager, EntityManager.
+
+Util is just a utility class that contains a few static methods/variables. It uses information from the main camera to set screen bounds, perform the math on collisions, and
+has a color dictionary. This violates SoC a fair bit because its kinda just a bunch of crap thrown into the class.
+
+BlockManager reads a level texture and places down the blocks. After that, it generates "Chunks" which are larger rectangles. The chunk algorithm is dynamic and tries its best
+to space everything evenly. The final chunk usually ends up being larger but thats okay. Chunks are later given to entities such as goomba's and mario so they end up checking for
+collision with far fewer blocks every frame.
+
+EntityManager reads in the same level texture and places down entities. An "Entity" is where I feel I've failed a little. Entity is seemingly too generic. For example, a player is an entity.
+and so is a goomba, the flag pole, and any coins present in the stage. The methods they inherit and override feels sloppy and I found myself writing code just to make it all fit together.
+This was a good lesson in UML first, code later.
+
+
+### Issues with the damn finite state machine
+
+I am still wrapping my head around proper implementation of the GoF state pattern. Making anything that uses more abstract versions of a class is really different and I need to read up on
+Generics and/or decorator pattern to be able to implement it properly.
+
+The MoveState class is an abomination which forces the player and goombas to check for collisions with things.
+Again this is where UML first would be much more beneficial.
+
+I would re write this from scratch if I had time/patience.
+
+### Good stuff
+
+I'm very content with how strong the aglorithm that builds the levels is. As long as the map is more than 30ish blocks wide there are no issues. Below 30 blocks and the camera might do some weird
+panning after crossing a threshold, nothing game breaking but a bit odd to see.
+
+If this was a 5/6 week project I'd consider making the worst Mario Maker 3 and go all out on the level editor since I think making mario levels and then playing them is fun.
+
