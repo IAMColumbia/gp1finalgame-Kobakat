@@ -83,13 +83,7 @@ public class PlayerController : MonoBehaviour
     void OnJump(InputAction.CallbackContext context)
     {
         if(player.groundState is GroundedState)
-            player.SetState(ref player.groundState, new JumpingState(player));
-
-        else if(player.groundState is FallingState && !player.hasDoubleJumped)
-        {
-            player.SetState(ref player.groundState, new JumpingState(player));
-            player.hasDoubleJumped = true;
-        }      
+            player.SetState(ref player.groundState, new JumpingState(player)); 
     }
 
     void OnJumpPeak(InputAction.CallbackContext context)

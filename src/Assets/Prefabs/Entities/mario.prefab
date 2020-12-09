@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8665917487378687908}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -95,21 +95,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2df4b4f3b0c6dc4596d2fee093bbb8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blocks: []
-  rect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
-  acceleration: 15
-  maxSpeed: 15
+  acceleration: 10
+  maxSpeed: 10
   frictionStrength: 0.1
   jumpBurstStrength: 10
-  jumpDeltaStrength: 30
+  jumpDeltaStrength: 25
   gravityStrength: 30
   maxFallSpeed: 20
-  airborneMovementDamp: 3
+  airborneMovementDamp: 1.25
+  deathTime: 5
+  deathPauseTime: 1
+  winTime: 5
 --- !u!114 &3037738364449894466
 MonoBehaviour:
   m_ObjectHideFlags: 0

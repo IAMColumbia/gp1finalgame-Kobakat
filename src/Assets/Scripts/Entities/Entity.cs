@@ -2,14 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Entity : MonoBehaviour, ICollidable
+public interface IEntity
+{
+    List<BlockChunk> chunksToCheckCollisionFor { get; set; }
+    List<Entity> entitiesToCheckCollisionFor { get; set; }
+    List<BlockChunk> chunksCurrentlyIn { get; set; }
+
+    float speed { get; set; }
+    float xMoveDir { get; set; }
+    float yMoveDir { get; set; }
+}
+public abstract class Entity : MonoBehaviour, ICollidable, IEntity
 {  
     public Rect rect { get; set; }
     public Texture2D texture { get; set; }
 
-    public List<BlockChunk> chunksToCheckCollisionFor;
-    public List<Entity> entitiesToCheckCollisionFor;
-    public List<BlockChunk> chunksCurrentlyIn;
+    public List<BlockChunk> chunksToCheckCollisionFor { get; set; }
+    public List<Entity> entitiesToCheckCollisionFor { get; set; }
+    public List<BlockChunk> chunksCurrentlyIn { get; set; }
 
     public float speed { get; set; }
     public float xMoveDir { get; set; }
@@ -29,8 +39,8 @@ public abstract class Entity : MonoBehaviour, ICollidable
         rect = new Rect(
             this.transform.position,
             new Vector2(
-            texture.width / Utility.pixelsPerUnit,
-            texture.height / Utility.pixelsPerUnit));
+            texture.width / Utility.pixelsPerUnit * transform.localScale.x,
+            texture.height / Utility.pixelsPerUnit * transform.localScale.x));
     }
 
     

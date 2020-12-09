@@ -15,13 +15,14 @@ public class Goomba : Entity
     public float gravityStrength = 3;
     public override void Initialize(List<BlockChunk> chunks, List<Entity> entities)
     {
-        base.Initialize(chunks, entities);
-
         this.moveState = new GoombaMoveState(this);
         this.groundState = new GoombaGroundState(this);
 
         this.spriteRenderer = this.GetComponent<SpriteRenderer>();
+        
         this.speed = -maxSpeed;
+
+        base.Initialize(chunks, entities);
     }
 
     void Update()
@@ -85,7 +86,10 @@ public class Goomba : Entity
     public override void HitSideEntity(Entity e)
     {
         if (e is Goomba)
+        {
             this.speed *= -1;
+        }
+            
     }
 
     public override void CheckForFall()
@@ -109,7 +113,7 @@ public class Goomba : Entity
 
     public void Die()
     {
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 
     void CheckIfOutOfBounds()
@@ -123,7 +127,7 @@ public class Goomba : Entity
 
             this.rect = new Rect(this.transform.position, this.rect.size);
 
-            this.speed = 0;
+            this.speed *= -1;
         }
 
         else if (this.rect.position.x > Utility.topRight.x - (this.rect.width / 2.0f))
@@ -135,10 +139,32 @@ public class Goomba : Entity
 
             this.rect = new Rect(this.transform.position, this.rect.size);
 
-            this.speed = 0;
+            this.speed *= -1;
         }
 
         if (this.rect.position.y < Utility.botLeft.y - (this.rect.height / 2.0f))
             this.Die();
     }
+    
+    #region Debug
+    void OnDrawGizmos()
+    {
+        // Green
+        Gizmos.color = new Color(0.0f, 1.0f, 0.0f);
+        DrawRect(rect);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        // Orange
+        Gizmos.color = new Color(1.0f, 0.5f, 0.0f);
+        DrawRect(rect);
+    }
+
+    void DrawRect(Rect rect)
+    {
+        Gizmos.DrawWireCube(rect.position, new Vector3(rect.width, rect.height, 0));
+    }
+    #endregion
+
 }

@@ -10,11 +10,10 @@ public class BrickBlock : Block
     }
 
     #region Player Collision event
-    public sealed override void HitTop() { }
-    public sealed override void HitSide() { }
+
     public sealed override void HitBottom() 
     {
-        Destroy(this.gameObject);
+        //Todo disable block
     }
     #endregion
 

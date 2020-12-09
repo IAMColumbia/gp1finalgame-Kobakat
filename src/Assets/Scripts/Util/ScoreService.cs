@@ -85,7 +85,7 @@ public class ScoreService : MonoBehaviour
     {
         Score += pointsPerExtraSecond * (int)Timer;
         scoreOnLevelStart = Score;
-
+        Timer = levelTime;
         Level++;
 
         if (Level > maxLevels - 1)

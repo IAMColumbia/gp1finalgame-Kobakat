@@ -8,7 +8,7 @@ public class CameraFollow : MonoBehaviour
 
     void LateUpdate()
     {
-        if(target)
+        if(target && target.GetComponent<Player>().gameState is PlayState)
         {
             this.transform.position = new Vector3(
             target.position.x,

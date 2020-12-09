@@ -9,7 +9,11 @@ using UnityEngine;
 /// This is useful for hitting blocks with mario's head so the block can still "animate" getting hit
 /// </summary>
 
-public abstract class Block : MonoBehaviour, ICollidable
+public interface IBlock
+{
+    void HitBottom();
+}
+public abstract class Block : MonoBehaviour, ICollidable, IBlock
 {
     public Rect rect { get; set; }
     public Texture2D texture { get; set; }
@@ -25,10 +29,8 @@ public abstract class Block : MonoBehaviour, ICollidable
     }
 
 
-    //What to do when a player (or maybe even an enemy) hits a block from a specified side
-    public abstract void HitTop();
-    public abstract void HitSide();
-    public abstract void HitBottom();
+    //What to do when a player (or maybe even an enemy) hits a block
+    public virtual void HitBottom() { }
 
     #region Debug
 #if UNITY_EDITOR

@@ -25,9 +25,9 @@ public abstract class MoveState: State, IMoveState
         {
             foreach(Block block in chunk.blocks)
             {
-                if (Utility.Intersectcs(Entity.rect, block.rect))
+                if (Utility.Intersectcs(Entity.rect, block.rect) && Entity.gameObject.activeSelf)
                 {
-                    Vector2 newVec = new Vector2(Entity.transform.position.x, Entity.transform.position.y) - block.rect.position;
+                    Vector2 newVec = Entity.rect.position - block.rect.position;
 
                     float newDst = newVec.magnitude;
 
@@ -72,13 +72,10 @@ public abstract class MoveState: State, IMoveState
             Entity.chunksCurrentlyIn.Clear();
         }
         
-
         foreach(BlockChunk chunk in Entity.chunksToCheckCollisionFor)
-        {
-            
+        {           
             if(Utility.Intersectcs(Entity.rect, chunk.rect))
             {
-
                 Entity.chunksCurrentlyIn.Add(chunk);
             }
         }
@@ -104,14 +101,13 @@ public abstract class MoveState: State, IMoveState
         Vector2 vec = Vector2.zero;
         float dst = 10;
 
-
         foreach (Entity e in entity.entitiesToCheckCollisionFor)
         {
-            if(entity != e && e)
+            if(entity != e && e.gameObject.activeSelf)
             {
                 if (Utility.Intersectcs(entity.rect, e.rect))
                 {
-                    Vector2 newVec = new Vector2(entity.transform.position.x, entity.transform.position.y) - e.rect.position;
+                    Vector2 newVec = entity.rect.position - e.rect.position;
 
                     float newDst = newVec.magnitude;
 

@@ -10,11 +10,6 @@ public class Player : Entity
     public State gameState;
     public Rect goalRect { get; set; }
 
-    //Hide these values from the inspector
-    public bool hasDoubleJumped { get; set; }
-
-    public float startLocation { get; set; }
-
     public float acceleration = 5;
     public float maxSpeed = 5;
     public float frictionStrength = 5;
@@ -22,8 +17,9 @@ public class Player : Entity
     public float jumpDeltaStrength = 0.25f;
     public float gravityStrength = 3;
     public float maxFallSpeed = 5;
-    public float airborneMovementDamp = 50;
+    public float airborneMovementDamp = 1.05f;
     public float deathTime = 3;
+    public float deathPauseTime = 1;
     public float winTime = 5;
 
     SpriteRenderer spriteRenderer = null;
@@ -52,6 +48,10 @@ public class Player : Entity
         this.gameState = new PlayState(this);
         this.spriteRenderer = this.GetComponent<SpriteRenderer>();
         this.speed = 0.1f;
+
+        //Make sure mario is using the proper sprite and rect size
+        this.spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/mario");
+        Awake();
 
         this.goalRect = goal;       
     }
@@ -180,6 +180,8 @@ public class Player : Entity
 
     public override void HitBottom(Block b)
     {
+        b.HitBottom();
+
         if(!(this.groundState is FallingState))
         {
             //Kill momentum
@@ -196,34 +198,55 @@ public class Player : Entity
     {
         if (e is Goomba)
             Die();
+
+        if(e is Coin)
+        {
+            e.gameObject.SetActive(false);
+            GetCoin();
+        }
+            
     }
 
     public override void HitSideEntity(Entity e)
     {
         if (e is Goomba)
             Die();
+
+        if (e is Coin)
+        {
+            e.gameObject.SetActive(false);
+            GetCoin();
+        }
     }
 
     public override void HitTopEntity(Entity e)
     {
         if (e is Goomba)
         {
-            Destroy(e.gameObject);
+            e.gameObject.SetActive(false);
+            BounceOffGoomba();          
+        }
 
-            this.yMoveDir = 15;
-        }           
+        if (e is Coin)
+        {
+            e.gameObject.SetActive(false);
+            GetCoin();
+        }
     }
 
     void Land()
     {
-        this.SetState(ref this.groundState, new GroundedState(this));
-        this.hasDoubleJumped = false;
+        if(!(this.groundState is GroundedState))
+            this.SetState(ref this.groundState, new GroundedState(this));
     }
 
     void Die()
     {
         if(!(this.gameState is DyingState))
+        {
             this.SetState(ref this.gameState, new DyingState(this));
+            this.spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/mariodead");
+        }           
     }
 
     void Win()
@@ -231,6 +254,20 @@ public class Player : Entity
         this.SetState(ref this.gameState, new WinState(this));
     }
 
+    void BounceOffGoomba()
+    {   
+        //Todo play sound
+
+        this.yMoveDir = jumpBurstStrength;
+        ScoreService.Score += 100;
+        SetState(ref groundState, new RisingState(this));
+    }
+
+    void GetCoin()
+    {
+        //Todo Play sound
+        ScoreService.Score += 100;
+    }
     #endregion
 
     #region Debug

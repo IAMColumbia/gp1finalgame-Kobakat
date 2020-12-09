@@ -12,8 +12,6 @@ public class SolidBlock : Block
 
     #region Player Collision event
     //Solid Blocks don't do anything
-    public sealed override void HitTop() { }
-    public sealed override void HitSide() { }
     public sealed override void HitBottom() { }
     #endregion
 
