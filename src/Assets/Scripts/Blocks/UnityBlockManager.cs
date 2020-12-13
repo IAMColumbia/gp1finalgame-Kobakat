@@ -6,10 +6,10 @@ public class UnityBlockManager : MonoBehaviour
 {
     public BlockManager manager = null;
     public List<UnityBlockChunk> unityBlockChunks { get; set; }
+    public List<Fire> Fires; //Forgive me for I have sinned. Used for the fire bar blocks to pass the entities to the manager.
 
     List<UnityBlock> unityBlocks;
     
-
     [SerializeField] int chunkCount = 10;
     [SerializeField] float chunkPadding = 20;
 
@@ -35,6 +35,7 @@ public class UnityBlockManager : MonoBehaviour
 
         unityBlocks = new List<UnityBlock>();
         unityBlockChunks = new List<UnityBlockChunk>();
+        Fires = new List<Fire>();
     }
 
     #region Build Level
@@ -118,7 +119,9 @@ public class UnityBlockManager : MonoBehaviour
     {
         foreach(UnityBlock b in this.unityBlocks)
         {
-            b.Initialize();
+            //Fire blocks already intiialzied dont do it again
+            if(!(b is FireBlock))
+                b.Initialize();
         }
     }
     /// <summary>
@@ -175,8 +178,15 @@ public class UnityBlockManager : MonoBehaviour
 
                 //Steel place firebar
                 else if (hexColor == Utility.colorDictionary["Steel"])
+                {
                     obj = Instantiate(fireBar, placeLocation, this.transform.rotation, this.transform);
+                    obj.GetComponent<UnityBlock>().Initialize();
 
+                    foreach (Fire f in obj.GetComponent<FireBlock>().fires)
+                        Fires.Add(f);
+                }
+                    
+                    
                 //Pipe
                 else if (hexColor == Utility.colorDictionary["PipeTopL"])
                     obj = Instantiate(pipeTopL, placeLocation, this.transform.rotation, this.transform);
@@ -196,7 +206,7 @@ public class UnityBlockManager : MonoBehaviour
                     this.unityBlocks.Add(obj.GetComponent<UnityBlock>());
                     manager.blocks.Add(obj.GetComponent<UnityBlock>().block);
                 }
-                    
+                       
             }
         }
     }

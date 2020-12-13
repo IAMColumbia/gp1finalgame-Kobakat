@@ -24,5 +24,4 @@ public class Entity : ICollidable, IEntity
         this.position = Vector3.zero;
         this.rectDim = Vector2.zero;
     }
-    
 }

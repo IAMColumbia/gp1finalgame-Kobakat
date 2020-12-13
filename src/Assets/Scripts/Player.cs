@@ -153,7 +153,7 @@ public class Player : UnityMover
 
     public override void HitBottom(UnityEntity e)
     {
-        if (e is Goomba)
+        if (e is Goomba || e is Fire)
             Die();
 
         if(e is Coin)
@@ -166,10 +166,10 @@ public class Player : UnityMover
 
     public override void HitSide(UnityEntity e, float side)
     {
-        if (e is Goomba)
+        if (e is Goomba || e is Fire)
             Die();
 
-        if (e is Coin)
+        else if (e is Coin)
         {
             e.gameObject.SetActive(false);
             GetCoin();
@@ -183,10 +183,15 @@ public class Player : UnityMover
             BounceOffGoomba();          
         }
 
-        if (e is Coin)
+        else if (e is Coin)
         {
             e.gameObject.SetActive(false);
             GetCoin();
+        }
+
+        else if (e is Fire)
+        {
+            Die();
         }
     }
 
@@ -214,7 +219,7 @@ public class Player : UnityMover
     {   
         //Todo play sound
 
-        mover.yMoveDir = jumpBurstStrength;
+        mover.yMoveDir = jumpBurstStrength * 3;
         mover.SetState(ref groundState, new RisingState(this));
         ScoreService.Score += 100;
         
@@ -225,29 +230,6 @@ public class Player : UnityMover
         //Todo Play sound
         ScoreService.Score += 100;
     }
-    #endregion
-
-    #region Debug
-    #if UNITY_EDITOR
-    void OnDrawGizmos()
-    {
-        // Green
-        Gizmos.color = new Color(0.0f, 1.0f, 0.0f);
-        DrawRect(entity.rect);
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        // Orange
-        Gizmos.color = new Color(1.0f, 0.5f, 0.0f);
-        DrawRect(entity.rect);
-    }
-
-    void DrawRect(Rect rect)
-    {
-        Gizmos.DrawWireCube(rect.position, new Vector3(rect.width, rect.height, 0));
-    }
-    #endif
     #endregion
 }
 

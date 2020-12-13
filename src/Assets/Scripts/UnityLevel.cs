@@ -48,7 +48,12 @@ public class UnityLevel : MonoBehaviour
         blockManagerComponent.BuildNewLevel(maps[ScoreService.Level]);
 
         entityManagerComponent = Instantiate(entityManagerPrefab, this.transform).GetComponent<UnityEntityManager>();
-        entityManagerComponent.BuildNewLevel(maps[ScoreService.Level], blockManagerComponent.manager.chunks, blockManagerComponent.unityBlockChunks);
+        
+        entityManagerComponent.BuildNewLevel(
+            maps[ScoreService.Level], 
+            blockManagerComponent.manager.chunks, 
+            blockManagerComponent.unityBlockChunks, 
+            blockManagerComponent.Fires);
     }
 
     void OnPlayerDeath()

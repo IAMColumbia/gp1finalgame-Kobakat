@@ -105,6 +105,8 @@ public class Mover : IMover
             entity.position.x,
             e.position.y + (e.rectDim.y / 2.0f) + (entity.rectDim.y / 2.0f),
             0);
+
+        entityTouchCount++;
     }
 
     //Snap to the side of the entity
@@ -127,6 +129,7 @@ public class Mover : IMover
                 entity.position.y,
                 0);
         }
+
     }
 
     public void HitBottom(Entity e) { } //Do nothing for now

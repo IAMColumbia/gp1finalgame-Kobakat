@@ -21,4 +21,27 @@ public abstract class UnityEntity : MonoBehaviour
 
         entity.rectDim = new Vector2(entity.rect.width, entity.rect.height);
     }
+
+    #region Debug
+#if UNITY_EDITOR
+    void OnDrawGizmos()
+    {
+        // Green
+        Gizmos.color = new Color(0.0f, 1.0f, 0.0f);
+        DrawRect(entity.rect);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        // Orange
+        Gizmos.color = new Color(1.0f, 0.5f, 0.0f);               
+        DrawRect(entity.rect);
+    }
+
+    void DrawRect(Rect rect)
+    {
+        Gizmos.DrawWireCube(rect.position, new Vector3(rect.width, rect.height, 0));
+    }
+#endif
+#endregion
 }

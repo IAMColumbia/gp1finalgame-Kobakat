@@ -16,11 +16,14 @@ public class UnityEntityManager : MonoBehaviour
 
     #endregion
 
-    public void Initialize(Texture2D Map, List<BlockChunk> Chunks, List<UnityBlockChunk> UnityChunks)
+    public void Initialize(Texture2D Map, List<BlockChunk> Chunks, List<UnityBlockChunk> UnityChunks, List<Fire> Fires)
     {
         manager = new EntityManager(Map, Chunks);
         unityChunks = UnityChunks;
-        unityEntities = new List<UnityEntity>();       
+        unityEntities = new List<UnityEntity>();
+
+        foreach (Fire f in Fires)
+            unityEntities.Add(f);
     }
 
     #region Build Level
@@ -28,10 +31,10 @@ public class UnityEntityManager : MonoBehaviour
     /// Removes and recreates a new level
     /// </summary>
     /// <param name="Map">The texture representing the level to load</param>
-    public void BuildNewLevel(Texture2D Map, List<BlockChunk> Chunks, List<UnityBlockChunk> UnityChunks)
+    public void BuildNewLevel(Texture2D Map, List<BlockChunk> Chunks, List<UnityBlockChunk> UnityChunks, List<Fire> Fires)
     {
         RemoveAllEntities();
-        Initialize(Map, Chunks, UnityChunks);
+        Initialize(Map, Chunks, UnityChunks, Fires);
         ConvertMapTo2DArray();
         PlaceBlockUsing2DMap();
         InitializeAllEntities();

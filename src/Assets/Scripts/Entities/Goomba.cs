@@ -54,8 +54,12 @@ public class Goomba : UnityMover
 
     public override void HitTop(UnityEntity e)
     {
-        if (e is UnityMover && !(e is Player)) 
+        if (e is UnityMover && !(e is Player))
+        {
             base.HitTop(e);
+            Land();
+        }
+            
     }
 
     public override void HitSide(UnityEntity e, float side)
@@ -98,26 +102,5 @@ public class Goomba : UnityMover
             mover.SetState(ref this.groundState, new GoombaFallingState(this));
         }
     }
-
-    #region Debug
-    void OnDrawGizmos()
-    {
-        // Green
-        Gizmos.color = new Color(0.0f, 1.0f, 0.0f);
-        DrawRect(entity.rect);
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        // Orange
-        Gizmos.color = new Color(1.0f, 0.5f, 0.0f);
-        DrawRect(entity.rect);
-    }
-
-    void DrawRect(Rect rect)
-    {
-        Gizmos.DrawWireCube(rect.position, new Vector3(rect.width, rect.height, 0));
-    }
-    #endregion
 
 }
