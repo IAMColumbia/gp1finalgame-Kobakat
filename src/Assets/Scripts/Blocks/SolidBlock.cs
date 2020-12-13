@@ -3,16 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Do nothing. This is just a plain block
-public class SolidBlock : Block
+public class SolidBlock : UnityBlock
 {
-    protected sealed override void Awake()
+    public sealed override void Initialize()
     {
-        base.Awake();
+        base.Initialize();
     }
-
-    #region Player Collision event
-    //Solid Blocks don't do anything
-    public sealed override void HitBottom() { }
-    #endregion
 
 }

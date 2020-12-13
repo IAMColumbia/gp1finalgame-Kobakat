@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Flag : Entity
+public class Flag : UnityEntity
 {
-    protected sealed override void Awake()
+    public sealed override void Initialize()
     {
-        base.Awake();
+        base.Initialize();
     }
 }

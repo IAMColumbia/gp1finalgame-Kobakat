@@ -11,47 +11,24 @@ using UnityEngine;
 
 public interface IBlock
 {
-    void HitBottom();
+    Vector3 position { get; set; }
 }
-public abstract class Block : MonoBehaviour, ICollidable, IBlock
+public class Block : ICollidable, IBlock
 {
-    public Rect rect { get; set; }
     public Texture2D texture { get; set; }
 
-    protected virtual void Awake()
-    {
-        texture = this.GetComponent<SpriteRenderer>().sprite.texture;
-        rect = new Rect(
-            this.transform.position,
-            new Vector2(
-            texture.width / Utility.pixelsPerUnit,
-            texture.height / Utility.pixelsPerUnit));
+    public Rect rect { get; set; }
+    public Vector3 position { get; set; }   
+    public Vector2 rectDim { get; set; }
+
+    public Block()
+    {           
+        this.texture = null;
+
+        this.rect = new Rect();
+
+        this.position = Vector3.zero;
+        this.rectDim = Vector2.zero;
     }
 
-
-    //What to do when a player (or maybe even an enemy) hits a block
-    public virtual void HitBottom() { }
-
-    #region Debug
-#if UNITY_EDITOR
-    void OnDrawGizmos()
-    {
-        // Green
-        Gizmos.color = new Color(0.0f, 1.0f, 0.0f);
-        DrawRect(rect);
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        // Orange
-        Gizmos.color = new Color(1.0f, 0.5f, 0.0f);
-        DrawRect(rect);
-    }
-
-    void DrawRect(Rect rect)
-    {
-        Gizmos.DrawWireCube(rect.position, new Vector3(rect.size.x, rect.size.y, 0.1f));
-    }
-#endif
-    #endregion
 }

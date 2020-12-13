@@ -25,8 +25,8 @@ public class GoombaFallingState : GroundState
     #region Logic Functions
     void ApplyGravity()
     {
-        goomba.yMoveDir -= goomba.gravityStrength * Time.deltaTime;
-        goomba.yMoveDir = Mathf.Clamp(goomba.yMoveDir, -goomba.maxFallSpeed, 5000f);
+        goomba.mover.yMoveDir -= goomba.gravityStrength * Time.deltaTime;
+        goomba.mover.yMoveDir = Mathf.Clamp(goomba.mover.yMoveDir, -goomba.maxFallSpeed, 5000f);
     }
 
     #endregion

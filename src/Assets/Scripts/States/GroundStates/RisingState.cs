@@ -29,14 +29,14 @@ public class RisingState : GroundState
     #region Logic Functions
     void ApplyGravity()
     {
-        player.yMoveDir -= player.gravityStrength * Time.deltaTime;
-        player.yMoveDir = Mathf.Clamp(player.yMoveDir, -player.maxFallSpeed, 5000f);
+        player.mover.yMoveDir -= player.gravityStrength * Time.deltaTime;
+        player.mover.yMoveDir = Mathf.Clamp(player.mover.yMoveDir, -player.maxFallSpeed, 5000f);
     }
 
     void CheckIfPlayerIsFallingAndChangeStateIfTheyAre()
     {
-        if (player.yMoveDir < 0)
-            player.SetState(ref player.groundState, new FallingState(player));
+        if (player.mover.yMoveDir < 0)
+            player.mover.SetState(ref player.groundState, new FallingState(player));
     }
     #endregion
 }

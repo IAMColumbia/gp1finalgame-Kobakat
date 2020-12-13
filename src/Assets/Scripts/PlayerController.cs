@@ -62,16 +62,16 @@ public class PlayerController : MonoBehaviour
         {
             if (absoluteInput > 0)
             {
-                player.xMoveDir = input;
+                player.mover.xMoveDir = input;
 
                 if (!(player.moveState is MovementState) && !(player.moveState is TurningState))
-                    player.SetState(ref player.moveState, new MovementState(player));
+                    player.mover.SetState(ref player.moveState, new MovementState(player));
             }
 
             else
             {
                 if (!(player.moveState is StoppingState))
-                    player.SetState(ref player.moveState, new StoppingState(player));
+                    player.mover.SetState(ref player.moveState, new StoppingState(player));
             }
         }
         
@@ -83,20 +83,20 @@ public class PlayerController : MonoBehaviour
     void OnJump(InputAction.CallbackContext context)
     {
         if(player.groundState is GroundedState)
-            player.SetState(ref player.groundState, new JumpingState(player)); 
+            player.mover.SetState(ref player.groundState, new JumpingState(player)); 
     }
 
     void OnJumpPeak(InputAction.CallbackContext context)
     {
         if ((player.groundState is JumpingState))
-            player.SetState(ref player.groundState, new RisingState(player));
+            player.mover.SetState(ref player.groundState, new RisingState(player));
 
     }
 
     void OnJumpRelease(InputAction.CallbackContext context)
     {
         if ((player.groundState is JumpingState))
-            player.SetState(ref player.groundState, new RisingState(player));
+            player.mover.SetState(ref player.groundState, new RisingState(player));
     }
 
     #endregion

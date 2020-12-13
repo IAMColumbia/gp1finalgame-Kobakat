@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8797943148364745685}
-  - component: {fileID: 7864145764096978775}
+  - component: {fileID: 9013137075315204694}
   m_Layer: 0
   m_Name: EntityManager
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7864145764096978775
+--- !u!114 &9013137075315204694
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,16 +40,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1724137532255417367}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2b2b65f709717947afaa83248480395, type: 3}
+  m_Script: {fileID: 11500000, guid: 01c22bd05622c8848a873da71f6aa429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goal:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
   mario: {fileID: 8665917487378687908, guid: a5d4b8f40ea6c0c4f92469bfc6e97633, type: 3}
   goomba: {fileID: 4225548827846237723, guid: 6b5ac4df8a4f98b4fa14cdf9b2a7f970, type: 3}
-  coin: {fileID: 1223143204523012074, guid: c92c9b618d9e8b04383ed5c86fe9318a, type: 3}
   flag: {fileID: 8248743148819027375, guid: 55efad702aae81949915a09cd7f6be33, type: 3}
+  coin: {fileID: 1223143204523012074, guid: c92c9b618d9e8b04383ed5c86fe9318a, type: 3}

@@ -28,7 +28,7 @@ public class SlidingState : GroundState
     #region Logic Functions
     void SetYMove()
     {
-        player.yMoveDir = -5.0f;
+        player.mover.yMoveDir = -5.0f;
     }
 
     #endregion

@@ -42,8 +42,8 @@ public class TurningState : MoveState
 
     void SlowSpeedDown()
     {
-        player.speed = Mathf.Lerp(
-            player.speed,
+        player.mover.speed = Mathf.Lerp(
+            player.mover.speed,
             0,
             (Time.time - startTime) / stopTime);
     }
@@ -51,7 +51,7 @@ public class TurningState : MoveState
     void SetStopTimeBasedOnCurrentSpeed()
     {
         this.startTime = Time.time;
-        this.stopTime = Mathf.Abs((player.speed / (player.maxSpeed * player.frictionStrength)));
+        this.stopTime = Mathf.Abs((player.mover.speed / (player.maxSpeed * player.frictionStrength)));
     }
 
     void SetStateToMovementAfterTurningFinishes()
@@ -60,12 +60,18 @@ public class TurningState : MoveState
         if (player.groundState is GroundedState)
         {
             //Check if their input direction and movement direction conflict
-            if (player.xMoveDir > 0 && player.speed >= 0 - epsilon
-            || player.xMoveDir < 0 && player.speed <= 0 + epsilon)
+            if (player.mover.xMoveDir > 0 && player.mover.speed >= 0 - epsilon
+            || player.mover.xMoveDir < 0 && player.mover.speed <= 0 + epsilon)
             {
                 //Set the state
-                player.SetState(ref player.moveState, new MovementState(player));
+                player.mover.SetState(ref player.moveState, new MovementState(player));
             }
+        }
+
+        //If they're not grounded they either jumped or fell, switch move states
+        else 
+        {
+            player.mover.SetState(ref player.moveState, new MovementState(player));
         }
     }
 

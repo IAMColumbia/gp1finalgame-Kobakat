@@ -95,14 +95,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2df4b4f3b0c6dc4596d2fee093bbb8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unityChunks: []
+  unityBlockChunksCurrentlyIn: []
+  unityEntities: []
   acceleration: 10
   maxSpeed: 10
-  frictionStrength: 0.1
-  jumpBurstStrength: 10
-  jumpDeltaStrength: 25
-  gravityStrength: 30
+  frictionStrength: 1
+  jumpBurstStrength: 5
+  jumpDeltaStrength: 50
+  gravityStrength: 25
   maxFallSpeed: 20
-  airborneMovementDamp: 1.25
+  airborneMovementDamp: 0.75
   deathTime: 5
   deathPauseTime: 1
   winTime: 5

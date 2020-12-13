@@ -33,13 +33,13 @@ public sealed class MovementState : MoveState
     {
         //Sprite is on the ground, they should have more control
         if(player.groundState is GroundedState)
-            player.speed += player.xMoveDir * Time.deltaTime * player.acceleration;
+            player.mover.speed += player.mover.xMoveDir * Time.deltaTime * player.acceleration;
 
         //Sprite is airborne, turning is harder
         else
-            player.speed += (player.xMoveDir * Time.deltaTime * player.acceleration) / player.airborneMovementDamp;
+            player.mover.speed += (player.mover.xMoveDir * Time.deltaTime * player.acceleration) / player.airborneMovementDamp;
 
-        player.speed = Mathf.Clamp(player.speed, -player.maxSpeed, player.maxSpeed);
+        player.mover.speed = Mathf.Clamp(player.mover.speed, -player.maxSpeed, player.maxSpeed);
     }
 
     /// <summary>
@@ -51,11 +51,11 @@ public sealed class MovementState : MoveState
         if(player.groundState is GroundedState)
         {
             //Check if their input direction and movement direction conflict
-            if (player.xMoveDir > 0 && player.speed < 0
-            || player.xMoveDir < 0 && player.speed > 0)
+            if (player.mover.xMoveDir > 0 && player.mover.speed < 0
+            || player.mover.xMoveDir < 0 && player.mover.speed > 0)
             {
                 //Set the state
-                player.SetState(ref player.moveState, new TurningState(player));
+                player.mover.SetState(ref player.moveState, new TurningState(player));
             }
         }
     }

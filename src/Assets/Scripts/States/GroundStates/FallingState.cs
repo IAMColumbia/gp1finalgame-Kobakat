@@ -24,8 +24,8 @@ public class FallingState : GroundState
     #region Logic Functions
     void ApplyGravity()
     {
-        player.yMoveDir -= player.gravityStrength * Time.deltaTime;
-        player.yMoveDir = Mathf.Clamp(player.yMoveDir, -player.maxFallSpeed, 5000f);
+        player.mover.yMoveDir -= player.gravityStrength * Time.deltaTime;
+        player.mover.yMoveDir = Mathf.Clamp(player.mover.yMoveDir, -player.maxFallSpeed, 5000f);
     }
 
     #endregion

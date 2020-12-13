@@ -61,21 +61,23 @@ public class DyingState : GameState
 
     void UpdatePosition()
     {
-        player.transform.position = new Vector3(
-            player.transform.position.x,
-            player.transform.position.y + player.yMoveDir * Time.deltaTime,
+        player.entity.position = new Vector3(
+            player.entity.position.x,
+            player.entity.position.y + player.mover.yMoveDir * Time.deltaTime,
             -0.1f); //Pull the player character in front of all other sprites
+        
+        player.transform.position = player.entity.position;
     }
 
     void SetInitialYDirection()
     {
-        player.yMoveDir = player.jumpBurstStrength * 2;
+        player.mover.yMoveDir = player.jumpBurstStrength * 3;
     }
 
     void ApplyGravity()
     {
-        player.yMoveDir -= player.gravityStrength * Time.deltaTime;
-        player.yMoveDir = Mathf.Clamp(player.yMoveDir, -player.maxFallSpeed, 5000f);
+        player.mover.yMoveDir -= player.gravityStrength * Time.deltaTime;
+        player.mover.yMoveDir = Mathf.Clamp(player.mover.yMoveDir, -player.maxFallSpeed, 5000f);
     }
 
     void CheckForPauseComplete()

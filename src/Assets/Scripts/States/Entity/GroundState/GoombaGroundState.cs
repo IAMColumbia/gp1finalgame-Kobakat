@@ -14,13 +14,13 @@ public class GoombaGroundState : GroundState
     #region State Events
     public sealed override void StateUpdate()
     {
-        goomba.yMoveDir = 0;
+        goomba.mover.yMoveDir = 0;
         base.StateUpdate();
     }
 
     public sealed override void OnStateEnter()
     {
-        goomba.yMoveDir = 0;
+        goomba.mover.yMoveDir = 0;
         base.OnStateEnter();
     }
     public sealed override void OnStateExit() { base.OnStateExit(); }

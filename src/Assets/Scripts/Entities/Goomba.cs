@@ -2,113 +2,83 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Goomba : Entity
+public class Goomba : UnityMover
 {
     public State moveState;
     public State groundState;
-    public State gameState;
-
-    SpriteRenderer spriteRenderer;
 
     public float maxSpeed = 5;
     public float maxFallSpeed = 5;
     public float gravityStrength = 3;
-    public override void Initialize(List<BlockChunk> chunks, List<Entity> entities)
+    public override void Initialize(List<BlockChunk> Chunks, List<Entity> Entities, List<UnityBlockChunk> UnityChunks, List<UnityEntity> UnityEntities)
     {
+        base.Initialize(Chunks, Entities, UnityChunks, UnityEntities);
+
         this.moveState = new GoombaMoveState(this);
         this.groundState = new GoombaGroundState(this);
-
-        this.spriteRenderer = this.GetComponent<SpriteRenderer>();
-        
-        this.speed = -maxSpeed;
-
-        base.Initialize(chunks, entities);
+      
+        mover.speed = -maxSpeed;        
     }
 
     void Update()
     {
+        CheckIfOutOfBounds();
+
         moveState.StateUpdate();
         groundState.StateUpdate();
-
-        UpdateSpriteDirection();
-        CheckIfOutOfBounds();
+     
+        CheckForFall();
     }
 
-    public override void HitTop(Block b)
+    public override void HitTop(UnityBlock b)
     {
-        this.transform.position = new Vector3(
-        this.transform.position.x,
-        b.rect.position.y + (b.rect.height / 2.0f) + (rect.height / 2.0f),
-        this.transform.position.z);
-
-        Land();
-        
+        base.HitTop(b);
+        Land();     
     }
 
-    public override void HitSide(Block b, float dir)
+    public override void HitSide(UnityBlock b, float side)
     {
-        //Kill speed
-        this.speed *= -1;
-
-        //We hit the left side of the block
-        if (dir < 0)
-        {
-            this.transform.position = new Vector3(
-                b.rect.position.x - (b.rect.width / 2.0f) - (rect.width / 2.0f),
-                this.transform.position.y,
-                this.transform.position.z);
-        }
-
-        //We hit the right side of the block
-        else
-        {
-            this.transform.position = new Vector3(
-                b.rect.position.x + (b.rect.width / 2.0f) + (rect.width / 2.0f),
-                this.transform.position.y,
-                this.transform.position.z);
-        }
+        base.HitSide(b, side);
+        mover.speed *= -1;      
     }
 
-    public override void HitBottom(Block b)
+    public override void HitBottom(UnityBlock b)
     {
         if (!(this.groundState is FallingState))
         {
-            //Kill momentum
-            this.yMoveDir = -1;
-
-            this.transform.position = new Vector3(
-                this.transform.position.x,
-                b.rect.position.y - (b.rect.height / 2.0f) - (rect.height / 2.0f),
-                this.transform.position.z);
+            base.HitBottom(b);
+ 
+            mover.yMoveDir = -1;          
         }
     }
 
-    public override void HitSideEntity(Entity e)
+    public override void HitTop(UnityEntity e)
     {
-        if (e is Goomba)
+        if (e is UnityMover && !(e is Player)) 
+            base.HitTop(e);
+    }
+
+    public override void HitSide(UnityEntity e, float side)
+    {
+        //Collide with all movers except the player
+        if(e is UnityMover && !(e is Player))
         {
-            this.speed *= -1;
-        }
-            
+            base.HitSide(e, side);
+            mover.speed *= -1;
+        }           
     }
 
-    public override void CheckForFall()
+    public override void HitBottom(UnityEntity e)
     {
-        if (this.blockTouchCount == 0)
-            this.SetState(ref groundState, new GoombaFallingState(this));
+        //DoNothing
     }
 
-    void UpdateSpriteDirection()
+    public void CheckIfOutOfBounds()
     {
-            if (this.spriteRenderer.flipX == true)
-                this.spriteRenderer.flipX = false;
-            else 
-                this.spriteRenderer.flipX = true;
-    }
-
-    void Land()
-    {
-        this.SetState(ref this.groundState, new GoombaGroundState(this));
+        if (mover.WentOutOfBoundsSideways())
+            mover.speed *= -1;
+        if (mover.WentOutOfBoundsDown())
+            this.Die();
     }
 
     public void Die()
@@ -116,49 +86,32 @@ public class Goomba : Entity
         this.gameObject.SetActive(false);
     }
 
-    void CheckIfOutOfBounds()
+    void Land()
     {
-        if (this.rect.position.x < Utility.botLeft.x + (this.rect.width / 2.0f))
-        {
-            this.transform.position = new Vector3(
-                Utility.botLeft.x + (this.rect.width / 2.0f),
-                this.transform.position.y,
-                0);
-
-            this.rect = new Rect(this.transform.position, this.rect.size);
-
-            this.speed *= -1;
-        }
-
-        else if (this.rect.position.x > Utility.topRight.x - (this.rect.width / 2.0f))
-        {
-            this.transform.position = new Vector3(
-                Utility.topRight.x - (this.rect.width / 2.0f),
-                this.transform.position.y,
-                0);
-
-            this.rect = new Rect(this.transform.position, this.rect.size);
-
-            this.speed *= -1;
-        }
-
-        if (this.rect.position.y < Utility.botLeft.y - (this.rect.height / 2.0f))
-            this.Die();
+        mover.SetState(ref this.groundState, new GoombaGroundState(this));
     }
-    
+
+    void CheckForFall()
+    {
+        if (mover.CheckForFall())
+        {           
+            mover.SetState(ref this.groundState, new GoombaFallingState(this));
+        }
+    }
+
     #region Debug
     void OnDrawGizmos()
     {
         // Green
         Gizmos.color = new Color(0.0f, 1.0f, 0.0f);
-        DrawRect(rect);
+        DrawRect(entity.rect);
     }
 
     void OnDrawGizmosSelected()
     {
         // Orange
         Gizmos.color = new Color(1.0f, 0.5f, 0.0f);
-        DrawRect(rect);
+        DrawRect(entity.rect);
     }
 
     void DrawRect(Rect rect)

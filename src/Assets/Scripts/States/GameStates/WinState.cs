@@ -44,8 +44,8 @@ public class WinState : GameState
 
     void SetStates()
     {
-        player.SetState(ref player.moveState, new GoalWalkState(player));
-        player.SetState(ref player.groundState, new SlidingState(player));     
+        player.mover.SetState(ref player.moveState, new GoalWalkState(player));
+        player.mover.SetState(ref player.groundState, new SlidingState(player));     
     }
 
     public static event Action PlayerWon;

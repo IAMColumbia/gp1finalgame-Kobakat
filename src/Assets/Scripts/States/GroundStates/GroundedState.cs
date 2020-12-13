@@ -13,13 +13,13 @@ public class GroundedState : GroundState
     #region State Events
     public sealed override void StateUpdate()
     {
-        player.yMoveDir = 0;
+        player.mover.yMoveDir = 0;
         base.StateUpdate();
     }
 
     public sealed override void OnStateEnter() 
     {
-        player.yMoveDir = 0;
+        player.mover.yMoveDir = 0;
         base.OnStateEnter(); 
     }
     public sealed override void OnStateExit() { base.OnStateExit(); }

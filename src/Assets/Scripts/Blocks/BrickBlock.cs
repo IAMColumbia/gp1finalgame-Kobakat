@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BrickBlock : Block
+public class BrickBlock : UnityBlock
 {
-    protected sealed override void Awake()
+    public sealed override void Initialize()
     {
-        base.Awake();
+        base.Initialize();
     }
 
     #region Player Collision event
 
     public sealed override void HitBottom() 
     {
-        //Todo disable block
+        Bump();
     }
+
+    void Bump() { }
     #endregion
 
 }

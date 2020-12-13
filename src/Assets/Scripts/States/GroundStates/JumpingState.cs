@@ -33,12 +33,12 @@ public class JumpingState : GroundState
     #region Logic Functions
     void SetUpwardsVelocity()
     {
-        player.yMoveDir = player.jumpBurstStrength;
+        player.mover.yMoveDir = player.jumpBurstStrength;
     }
 
     void ApplyDeltaJump()
     {
-        player.yMoveDir += player.jumpDeltaStrength * Time.deltaTime;
+        player.mover.yMoveDir += player.jumpDeltaStrength * Time.deltaTime;
     }
 
     #endregion

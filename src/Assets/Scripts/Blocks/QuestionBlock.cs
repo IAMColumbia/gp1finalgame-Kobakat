@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestionBlock : Block
+public class QuestionBlock : UnityBlock
 {
     bool struck = false;
-    protected sealed override void Awake()
+    public sealed override void Initialize()
     {
-        base.Awake();
+        base.Initialize();
     }
 
     #region Player Collision event
@@ -17,8 +17,7 @@ public class QuestionBlock : Block
         {
             EmptyBlock();
             Bounce();
-        }
-        
+        }    
     }
 
     void Bounce()

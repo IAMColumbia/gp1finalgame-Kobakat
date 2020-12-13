@@ -94,9 +94,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07bf8139611a41d49bfda86d902e603f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chunksToCheckCollisionFor: []
-  entitiesToCheckCollisionFor: []
-  chunksCurrentlyIn: []
-  maxSpeed: 5
+  unityChunks: []
+  unityBlockChunksCurrentlyIn: []
+  unityEntities: []
+  maxSpeed: 3
   maxFallSpeed: 20
   gravityStrength: 30

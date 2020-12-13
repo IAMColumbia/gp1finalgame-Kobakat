@@ -43,8 +43,8 @@ public class GoalWalkState : MoveState
 
     void KillSpeed()
     {
-        player.xMoveDir = 0;
-        player.speed = 0;
+        player.mover.xMoveDir = 0;
+        player.mover.speed = 0;
     }
 
     bool CheckIfBlockHit()
@@ -53,8 +53,8 @@ public class GoalWalkState : MoveState
     }
     void SetWalkSpeed()
     {
-        player.xMoveDir = 1;
-        player.speed = 5.0f;
+        player.mover.xMoveDir = 1;
+        player.mover.speed = 5.0f;
     }
 
     #endregion

@@ -7,27 +7,28 @@ public abstract class MoveState: State, IMoveState
     #region State Events
     public override void OnStateEnter() { }
 
-
     public override void StateUpdate() { }
 
     public override void OnStateExit() { }
     #endregion
 
     #region State Logic
-    protected virtual void CheckForBlockCollisions(Entity Entity)
+    protected virtual void CheckForBlockCollisions(UnityMover m)
     {
-        Block b = null;
+        UnityBlock b = null;
         Vector2 vec = Vector2.zero;
-        float dst = 10;
-        Entity.blockTouchCount = 0;
+        
+        float dst = 10; //initialize this to an unimportant value
 
-        foreach (BlockChunk chunk in Entity.chunksCurrentlyIn)
+        m.mover.unitTouchCount = 0;
+        m.mover.blockTouchCount = 0;
+        foreach (UnityBlockChunk chunk in m.unityBlockChunksCurrentlyIn)
         {
-            foreach(Block block in chunk.blocks)
+            foreach(UnityBlock uBlock in chunk.unityBlocks)
             {
-                if (Utility.Intersectcs(Entity.rect, block.rect) && Entity.gameObject.activeSelf)
+                if (Utility.Intersectcs(m.entity.rect, uBlock.block.rect) && m.gameObject.activeSelf)
                 {
-                    Vector2 newVec = Entity.rect.position - block.rect.position;
+                    Vector2 newVec = m.entity.position - uBlock.block.position;
 
                     float newDst = newVec.magnitude;
 
@@ -35,79 +36,76 @@ public abstract class MoveState: State, IMoveState
                     {
                         vec = newVec;
                         dst = newDst;
-                        b = block;
+                        b = uBlock;
                     }
 
-                    Entity.blockTouchCount++;
+                    m.mover.unitTouchCount++;
+                    m.mover.blockTouchCount++;
                 }
             }
         }
 
-        if (Entity.blockTouchCount > 0)
+        if (m.mover.blockTouchCount > 0)
         {
-            float minAngle = Utility.MinDropAngle(Entity.rect, b.rect);
+            float minAngle = Utility.MinDropAngle(m.entity.rect, b.block.rect);
 
             minAngle = 90 - minAngle;
 
             float angle = Vector2.Angle(vec, Vector2.up);
 
             if (angle < minAngle)
-                Entity.HitTop(b);
+                m.HitTop(b);
             else if (angle >= minAngle && angle <= 180 - minAngle)
-                Entity.HitSide(b, vec.x);
+                m.HitSide(b, vec.x);
             else
-                Entity.HitBottom(b);
+                m.HitBottom(b);
 
-            Debug.DrawRay(b.rect.position, vec);
-        }
-        
-        Entity.CheckForFall();
-
+            Debug.DrawRay(b.block.rect.position, vec);
+        }        
     }
 
-    public virtual void CheckForChunksCurrentlyIn(Entity Entity)
+    public virtual void CheckForChunksCurrentlyIn(UnityMover m)
     {
-        if(Entity.chunksCurrentlyIn.Count > 0)
-        {
-            Entity.chunksCurrentlyIn.Clear();
-        }
+        m.unityBlockChunksCurrentlyIn.Clear(); 
         
-        foreach(BlockChunk chunk in Entity.chunksToCheckCollisionFor)
+        foreach(UnityBlockChunk c in m.unityChunks)
         {           
-            if(Utility.Intersectcs(Entity.rect, chunk.rect))
+            if(Utility.Intersectcs(m.entity.rect, c.chunk.rect))
             {
-                Entity.chunksCurrentlyIn.Add(chunk);
+                m.unityBlockChunksCurrentlyIn.Add(c);
             }
         }
     }
-    public virtual void UpdateRectAndCheckForCollisions(Entity Entity)
+    public virtual void UpdateRectAndCheckForCollisions(UnityMover m)
     {
-        Entity.rect = new Rect(Entity.transform.position, Entity.rect.size);
+        m.entity.rect = new Rect(m.entity.position, m.entity.rect.size);
 
-        CheckForBlockCollisions(Entity);
+        CheckForBlockCollisions(m);
 
-        Entity.rect = new Rect(Entity.transform.position, Entity.rect.size);
+        m.entity.rect = new Rect(m.entity.position, m.entity.rect.size);
     }
-    public virtual void UpdatePosition(Entity Entity)
+    public virtual void UpdatePosition(UnityMover m)
     {
-        Entity.transform.position = new Vector3(
-            Entity.transform.position.x + (Entity.speed * Time.deltaTime),
-            Entity.transform.position.y + (Entity.yMoveDir * Time.deltaTime),
-            Entity.transform.position.z);
+        m.entity.position = new Vector3(
+            m.entity.position.x + (m.mover.speed * Time.deltaTime),
+            m.entity.position.y + (m.mover.yMoveDir * Time.deltaTime),
+            0);
+
+        m.transform.position = m.entity.position;
     }
 
-    public virtual void CheckForCollisionWithOtherEntities(Entity entity)
+    public virtual void CheckForCollisionWithOtherEntities(UnityMover m)
     {
         Vector2 vec = Vector2.zero;
         float dst = 10;
 
-        foreach (Entity e in entity.entitiesToCheckCollisionFor)
+        foreach (UnityEntity e in m.unityEntities)
         {
-            if(entity != e && e.gameObject.activeSelf)
+            if(m != e && e.gameObject.activeSelf)
             {
-                if (Utility.Intersectcs(entity.rect, e.rect))
+                if (Utility.Intersectcs(m.entity.rect, e.entity.rect))
                 {
-                    Vector2 newVec = entity.rect.position - e.rect.position;
+                    Vector2 newVec = m.entity.position - e.entity.position;
 
                     float newDst = newVec.magnitude;
 
@@ -117,18 +115,18 @@ public abstract class MoveState: State, IMoveState
                         dst = newDst;
                     }
 
-                    float minAngle = Utility.MinDropAngle(entity.rect, e.rect);
+                    float minAngle = Utility.MinDropAngle(m.entity.rect, e.entity.rect);
 
                     minAngle = 90 - minAngle;
 
                     float angle = Vector2.Angle(vec, Vector2.up);
 
                     if (angle < minAngle)
-                        entity.HitTopEntity(e);
+                        m.HitTop(e);
                     else if (angle >= minAngle && angle <= 180 - minAngle)
-                        entity.HitSideEntity(e);
+                        m.HitSide(e, vec.x);
                     else
-                        entity.HitBottomEntity(e);
+                        m.HitBottom(e);
                 }
             }
             

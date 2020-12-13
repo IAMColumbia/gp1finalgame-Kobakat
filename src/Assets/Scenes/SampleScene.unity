@@ -420,19 +420,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1276514517}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ce6bfb977e66574c93b7e45b6c1f11a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b4bb9c4afc1ad7469f2c24fc539bfa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maps:
+  - {fileID: 2800000, guid: 86337be74a566b44abb411c839fb871d, type: 3}
+  - {fileID: 2800000, guid: 676e9efed96af7b4f91c2a29013782f9, type: 3}
+  - {fileID: 2800000, guid: c20b407eaa38069499f6bb73d54fb65e, type: 3}
   blockManagerPrefab: {fileID: 2247774897526996124, guid: 907abe4ac5203254a9326aaf10eaf083,
     type: 3}
   entityManagerPrefab: {fileID: 1724137532255417367, guid: d8639619f16946f4ba923ce098266aa8,
     type: 3}
   utilityPrefab: {fileID: 711762813608995237, guid: 0d60dc57d4796664fb1f6028cd01faa9,
     type: 3}
-  maps:
-  - {fileID: 2800000, guid: 86337be74a566b44abb411c839fb871d, type: 3}
-  - {fileID: 2800000, guid: 676e9efed96af7b4f91c2a29013782f9, type: 3}
-  - {fileID: 2800000, guid: c20b407eaa38069499f6bb73d54fb65e, type: 3}
 --- !u!4 &1276514519
 Transform:
   m_ObjectHideFlags: 0

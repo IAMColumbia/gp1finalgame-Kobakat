@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 public abstract class State
 {
-    protected Entity entity;
+    protected UnityMover mover;
 
     #region State Events
     public virtual void StateUpdate() { }

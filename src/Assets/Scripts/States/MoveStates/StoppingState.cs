@@ -40,8 +40,8 @@ public class StoppingState : MoveState
 
     void SlowSpeedDown()
     {
-        player.speed = Mathf.Lerp(
-            player.speed,
+        player.mover.speed = Mathf.Lerp(
+            player.mover.speed,
             0,
             (Time.time - startTime) / stopTime);
     }
@@ -49,7 +49,7 @@ public class StoppingState : MoveState
     void SetStopTimeBasedOnCurrentSpeed()
     {
         this.startTime = Time.time;
-        this.stopTime = Mathf.Abs((player.speed / (player.maxSpeed * player.frictionStrength)));
+        this.stopTime = Mathf.Abs((player.mover.speed / (player.maxSpeed * player.frictionStrength)));
     }
     #endregion
 }
