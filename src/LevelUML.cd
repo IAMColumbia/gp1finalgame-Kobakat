@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="UnityLevel">
+    <Position X="1.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAQAEIAABAQAAAQBAASAMoAAAAAAIAAAIAQAACMA=</HashCode>
+      <FileName>Assets\Scripts\Util\UnityLevel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockManager">
+    <Position X="4.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAEAAAAABAQQEAAAAABAAAAQAAAAAAAAAAAAAABBA=</HashCode>
+      <FileName>Assets\Scripts\Blocks\BlockManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Left" Position="0.1" />
+  </Class>
+  <Class Name="UnityBlockManager">
+    <Position X="4.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAIQJAAAgQBAQQABBAAAEAAMBACgAAgAAAAAAAAAAZQ=</HashCode>
+      <FileName>Assets\Scripts\Blocks\UnityBlockManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EntityManager">
+    <Position X="8.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAEAEAAABAAQEAAAAABAAAAQAAAQABAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\EntityManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Right" Position="0.1" />
+  </Class>
+  <Class Name="UnityEntityManager">
+    <Position X="8.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAwAAASAAAIAAAQAGAAWAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\UnityEntityManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utility">
+    <Position X="2.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QQRAABAAAAAAAQkARCEAABAAAEAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Assets\Scripts\Util\Utility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CameraFollow">
+    <Position X="11.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Util\CameraFollow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ScoreService">
+    <Position X="0.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAAAQAAAQoARAAQAAAABAACAAEDABAAwAAUUAE=</HashCode>
+      <FileName>Assets\Scripts\Util\ScoreService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LevelAudio">
+    <Position X="2.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAgZAAQAAAAAAAAggAAAAAAAAgAAAAAACAAA=</HashCode>
+      <FileName>Assets\Scripts\Util\LevelAudio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="IBlockManager">
+    <Position X="4.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAQAAAAAAAAAAAAAAAAAAAAAAAAAAABBA=</HashCode>
+      <FileName>Assets\Scripts\Blocks\BlockManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IMappable">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAEAAAAAAAAAEAAAAABAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Util\IMappable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IEntityManager">
+    <Position X="8.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAABAAAAAAAAAAAAAAAAAAQABAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\EntityManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

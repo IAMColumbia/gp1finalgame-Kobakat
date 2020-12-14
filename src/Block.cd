@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Block">
+    <Position X="4.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAIAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Blocks\Block.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Left" Position="0.1" />
+  </Class>
+  <Class Name="UnityBlock">
+    <Position X="7.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIEAAAAAAIAAQABAAAAAAAAUAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Assets\Scripts\Blocks\UnityBlock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BrickBlock">
+    <Position X="10.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYQAAAAAAAAAQEAABAAAAAAAAAAAAIAAABAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Blocks\BrickBlock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockChunk">
+    <Position X="2.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Assets\Scripts\Blocks\BlockChunk.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FireBlock">
+    <Position X="8.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAQAAAAAAAAAAAEAEAQAAAAAQwAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Blocks\FireBlock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuestionBlock">
+    <Position X="6.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYQAAAAAAAAAQEAABAAIAAAAAAAAAIAAABAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Blocks\QuestionBlock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SolidBlock">
+    <Position X="5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Blocks\SolidBlock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="IBlock">
+    <Position X="2.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Blocks\Block.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ICollidable">
+    <Position X="0.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAIAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Util\ICollidable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IBlockChunk">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Assets\Scripts\Blocks\BlockChunk.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

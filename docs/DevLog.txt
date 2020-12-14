@@ -83,3 +83,26 @@ panning after crossing a threshold, nothing game breaking but a bit odd to see.
 
 If this was a 5/6 week project I'd consider making the worst Mario Maker 3 and go all out on the level editor since I think making mario levels and then playing them is fun.
 
+
+
+
+
+### FB
+
+This build I spent a good deal of time trying to break away from some dependencies with unity. I did what I could to break off some logic into POCOs and have Unity versions encapsulate them. 
+While this helped, the root of the most critical aspects of game logic (mario and goomba movement) rely on Unity and I just don't have enough time to rip out the state machine and rework it to be
+more engine independent.
+
+I also broke my entities down further by making "Entities" and "Movers". Entities are static (non moving) and Movers and... moving. This lets me remove unnecessary properties such as speed, direction, etc
+from coins and the flag.
+
+Lastly I put a bit of polish in the game by adding Audio and Animation.
+
+Animation uses unity to build the actual clips but utilizes my finite state machine behavior to actually determine what animation it plays.
+
+Audio on the other hand is completely reliant on Unity. I don't have enough time to create an audio system thats abstractable outside it. Its pretty hacky because it throws a lot of if catches into my player class.
+Combined with the already messy logic intertwined with the state machine things get very ugly.
+
+There is one final bug I can't seem to work out. Goombas are checking for collision with eachother and acting on that collision, but theyre also checking for collision with other blocks. Because they may sometimes
+hit both at the same time things can get weird. I've removed their sideways collision to help with this and it mostly works albeit really weird happenings due to floating point percision errors I can't seem
+to track down.

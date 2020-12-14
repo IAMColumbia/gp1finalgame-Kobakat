@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Entity">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAIAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\Entity.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Right" Position="0.1" />
+  </Class>
+  <Class Name="UnityEntity">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEABAAAAIAAQAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\UnityEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Mover">
+    <Position X="2.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAMAhRAAAABAAAABAAAAYQAAEAAAAQABAAAAAAiAAAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\Mover.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Right" Position="0.1" />
+  </Class>
+  <Class Name="UnityMover">
+    <Position X="6" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAASABAAAQAQAAEAAAAAAAAQAAAAAAAAg=</HashCode>
+      <FileName>Assets\Scripts\Entities\UnityMover.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fire">
+    <Position X="8.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\Fire.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flag">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\Flag.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Coin">
+    <Position X="11.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\Coin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player">
+    <Position X="4.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYgAVABAAAAgSYhCEAAACCAFACAAywYAwBgAAiACBQ=</HashCode>
+      <FileName>Assets\Scripts\Entities\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Goomba">
+    <Position X="7.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAFAAAAAAAQQhAAAAAAAAEACAAQgQAgAAAAgAAAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\Goomba.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerAudio">
+    <Position X="2.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEgYAAABAAgAAACAAAAAAAAAAgEAAAAICAEA=</HashCode>
+      <FileName>Assets\Scripts\Util\PlayerAudio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerController">
+    <Position X="0.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAACAAAAAIAAAAAAAAAABAABAJQCAAAAAACCA=</HashCode>
+      <FileName>Assets\Scripts\Util\PlayerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="IEntity">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\Entity.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IMover">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAgRAAAABAAAAAAAAAYAAAAAAAAQABAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\Mover.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

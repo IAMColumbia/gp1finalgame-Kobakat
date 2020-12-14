@@ -1,0 +1,47 @@
+**What dependencies did I have**
+
+My game starts from a single object that breaks down responsibility into other objects. (duh)
+
+Level --> Utility, BlockManager, EntityManager
+
+BlockManager --> BlockChunks --> Blocks
+EntityManager --> Plain Entities or Movers (Entities that move)
+
+Movers --> Finite State Machine Logic.
+
+There are some hacky/designer tricks I did towards the end to add polish such as music and sound. Those dependencies are all over the place.
+I'd like to spend more time learning how to create a proper audio system.
+
+**How did my class/component design work out**
+
+I think my load order system was pretty solid. I tried to avoid using monobehavior functions for the loading because I wanted things to be abstract.
+I got it down pretty well and I'm much more comfortable avoiding in editor design for more programatic scene generation. My state system feels weak
+though and I know I could improve if I had the chance to try again.
+
+**Rate how reusable the game code is**
+
+I'd say maybe 50% of the code specifically relies on unity while 80% is specific on the game itself. Most of this boils down the load
+order and finite state machine behavior. The systems that are in place are very much reusable however. In particular, the blockmanager
+is very abstract and can load in whatever you give it while also creating the chunking system. Very content with how that turned out
+I think it is the strongest part of my codebase.
+
+Going back I would rip out my state machine and figure out how to add a generic container class or learn decorator pattern to further
+abstract my states. But maybe specific hard coded states are unavoidable.
+
+**How maintainable is my code**
+
+There are two sides to this coin. Adding new blocks/levels/enemies themselves are very easy however due to the current structure
+and reliance on a finite state machine, dependencies are interwined everywhere and it will take careful consideration on how to add
+them together to make it all work. Doesn't follow open-close principle very well but can a finite state machine like this ever really do so?
+
+**Did I finish**
+
+Yes. Given the time frame I think I actually added more in than what I had set out to. I think all thats left to be said is
+if I had more time I would have actually dived deeper into an ingame level editor so the player can draw their own bitmaps
+and then play their own level.
+
+if i had..
+
+1 week - title screen where they can simply add a png from file folder and select levels to play
+2 weeks - create an in game bitmap maker that gives you a color pallete specifically for the game
+3 weeks - drag and drop blocks/enemies/etc onto a grid to create levels
