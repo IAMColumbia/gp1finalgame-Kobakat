@@ -18,6 +18,8 @@ public class GoombaMoveState : MoveState
         base.UpdatePosition(goomba);     
         base.UpdateRectAndCheckForCollisions(goomba);
         base.CheckForCollisionWithOtherEntities(goomba);
+
+        goomba.entity.rect = new Rect(goomba.entity.position, goomba.entity.rect.size);
     }
 
     public sealed override void OnStateEnter() 

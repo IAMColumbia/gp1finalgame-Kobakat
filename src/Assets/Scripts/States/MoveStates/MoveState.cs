@@ -133,16 +133,16 @@ public abstract class MoveState: State, IMoveState
 
                     float angle = Vector2.Angle(vec, Vector2.up);
 
-                    if (angle < minAngle)
+                    if (angle < minAngle + 5)
                         m.HitTop(e);
-                    else if (angle >= minAngle && angle <= 180 - minAngle)
+                    else if (angle >= minAngle - 5 && angle <= 180 - minAngle)
                         m.HitSide(e, vec.x);
                     else
                         m.HitBottom(e);
                 }
             }
             
-        }       
+        }
     }
 
     #endregion

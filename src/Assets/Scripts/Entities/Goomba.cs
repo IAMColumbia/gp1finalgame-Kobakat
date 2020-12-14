@@ -66,12 +66,7 @@ public class Goomba : UnityMover
 
     public override void HitSide(UnityEntity e, float side)
     {
-        //Collide with all movers except the player
-        if(e is UnityMover && !(e is Player))
-        {
-            base.HitSide(e, side);
-            mover.speed *= -1;
-        }           
+        //DoNothing
     }
 
     public override void HitBottom(UnityEntity e)
@@ -99,8 +94,8 @@ public class Goomba : UnityMover
 
     void CheckForFall()
     {
-        if (mover.CheckForFall())
-        {           
+        if (mover.CheckForFall() && !(this.groundState is GoombaFallingState))
+        {             
             mover.SetState(ref this.groundState, new GoombaFallingState(this));
         }
     }

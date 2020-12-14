@@ -98,9 +98,9 @@ public class ScoreService : MonoBehaviour
         Level++;
 
         if (Level > maxLevels - 1)
-        {
-            Level = 0;
+        {        
             HiScore = Score;
+            NewGame(maxLevels);
         }
             
     }
