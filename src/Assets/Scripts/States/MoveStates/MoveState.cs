@@ -72,7 +72,15 @@ public abstract class MoveState: State, IMoveState
         {           
             if(Utility.Intersectcs(m.entity.rect, c.chunk.rect))
             {
+                int index;
                 m.unityBlockChunksCurrentlyIn.Add(c);
+                index = m.unityChunks.IndexOf(c);
+
+                if(m.unityChunks.IndexOf(c) != m.unityChunks.Count - 1)
+                    m.unityBlockChunksCurrentlyIn.Add(m.unityChunks[index + 1]);
+
+                if(m.unityChunks.IndexOf(c) != 0)
+                    m.unityBlockChunksCurrentlyIn.Add(m.unityChunks[index - 1]);
             }
         }
     }

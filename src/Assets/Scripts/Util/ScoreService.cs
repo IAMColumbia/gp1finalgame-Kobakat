@@ -8,10 +8,14 @@ public class ScoreService : MonoBehaviour
     public static int levelTime = 200;
     public static int pointsPerExtraSecond = 10;
 
-    [SerializeField] Text scoreText, livesText, timeText = null;
+    [SerializeField] Text scoreText = null;
+    [SerializeField] Text livesText = null;
+    [SerializeField] Text timeText = null;
+    [SerializeField] Text hiscoreText = null;
 
     static int scoreOnLevelStart;
     static int maxLevels;
+    static int HiScore;
 
     #region Properties
     public static int Score { get; set; }
@@ -50,6 +54,11 @@ public class ScoreService : MonoBehaviour
         scoreText.text = Score.ToString();
         livesText.text = "Lives: "+ Lives.ToString();
         timeText.text = ((int)Timer).ToString();
+
+        if (HiScore > 0)
+            hiscoreText.text = "HiScore: " + HiScore.ToString();
+        else
+            hiscoreText.text = "";
     }
 
     void Countdown()
@@ -89,7 +98,11 @@ public class ScoreService : MonoBehaviour
         Level++;
 
         if (Level > maxLevels - 1)
-            Level = 1;
+        {
+            Level = 0;
+            HiScore = Score;
+        }
+            
     }
 
     public static event Action TimesUp;

@@ -228,7 +228,7 @@ public class Player : UnityMover
     {
         SFX.PlayClip(SFX.stompClip);
 
-        mover.yMoveDir = jumpBurstStrength * 3;
+        mover.yMoveDir = jumpBurstStrength * 2;
         mover.SetState(ref groundState, new RisingState(this));
         ScoreService.Score += 100;
         

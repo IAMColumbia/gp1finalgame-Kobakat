@@ -7,7 +7,7 @@ public abstract class UnityMover : UnityEntity
     public Mover mover;
 
     public List<UnityBlockChunk> unityChunks { get; set; }
-    public List<UnityBlockChunk> unityBlockChunksCurrentlyIn { get; set; }
+    public List<UnityBlockChunk> unityBlockChunksCurrentlyIn;
     public List<UnityEntity> unityEntities { get; set; }
 
     public Animator anim;
