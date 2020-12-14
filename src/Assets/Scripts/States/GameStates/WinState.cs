@@ -16,6 +16,7 @@ public class WinState : GameState
     {
         SetTimes();
         SetStates();
+        PlayerJustWon.Invoke();
         base.OnStateEnter();
     }
 
@@ -49,5 +50,6 @@ public class WinState : GameState
     }
 
     public static event Action PlayerWon;
+    public static event Action PlayerJustWon;
     #endregion
 }

@@ -20,10 +20,13 @@ public class DyingState : GameState
     #region State Events
     public sealed override void OnStateEnter()
     {
+        PlayerJustDied.Invoke();
+
         SetTimes();
         SetInitialYDirection();
         SetAnim();
-        base.OnStateEnter();
+        PlayAudio();
+        base.OnStateEnter();      
     }
 
     public sealed override void StateUpdate()
@@ -84,7 +87,10 @@ public class DyingState : GameState
     void CheckForPauseComplete()
     {
         if (Time.time > this.startTime + player.deathPauseTime)
+        {
             donePausing = true;
+            PlayerPauseComplete.Invoke();
+        }           
     }
 
     void FlagLevelLoad()
@@ -98,6 +104,13 @@ public class DyingState : GameState
         player.anim.Play(player.dyingState);
     }
 
+    void PlayAudio()
+    {
+        player.SFX.PlayClip(player.SFX.dieClip);
+    }
+
     public static event Action PlayerDied;
+    public static event Action PlayerPauseComplete;
+    public static event Action PlayerJustDied;
     #endregion
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8833432904731050205}
   - component: {fileID: 8347093588704901088}
   - component: {fileID: 3037738364449894466}
+  - component: {fileID: -4912178067203194287}
   - component: {fileID: -5523266332090241790}
   m_Layer: 0
   m_Name: mario
@@ -105,15 +106,16 @@ MonoBehaviour:
   gravityStrength: 60
   maxFallSpeed: 20
   airborneMovementDamp: 0.75
-  deathTime: 5
-  deathPauseTime: 1
-  winTime: 5
+  deathTime: 4
+  deathPauseTime: 0.5
+  winTime: 9
   idleState: 2081823275
   walkState: 1744665739
   jumpState: 1137391654
   turnState: 643628874
   dyingState: 315139327
   grabState: -1347921612
+  SFX: {fileID: 0}
 --- !u!114 &3037738364449894466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +128,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f2a132497cfc694b96b3356078284e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-4912178067203194287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8665917487378687908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6695a3cebf0ccfa41a716f868f571185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpClip: {fileID: 8300000, guid: b48420796e9009344ae0ca6752223d2a, type: 3}
+  dieClip: {fileID: 8300000, guid: b6205d3eebaf8904494dfb282079f87f, type: 3}
+  coinClip: {fileID: 8300000, guid: 5fdf0872d5249804784b80ef49707069, type: 3}
+  stompClip: {fileID: 8300000, guid: ccbb3da0843a91c40a73a5fe94f75d0c, type: 3}
+  blockClip: {fileID: 8300000, guid: 30a4d57114e9927408e2bcd1f492b261, type: 3}
+  skidClip: {fileID: 8300000, guid: 846526b57cda8b448838c52cf74f5cd2, type: 3}
+  priority: 128
+  volume: 0.85
 --- !u!95 &-5523266332090241790
 Animator:
   serializedVersion: 3

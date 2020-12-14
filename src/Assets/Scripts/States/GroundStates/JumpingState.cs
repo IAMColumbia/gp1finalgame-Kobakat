@@ -26,6 +26,7 @@ public class JumpingState : GroundState
     {
         SetUpwardsVelocity();
         SetAnim();
+        PlayAudio();
         base.OnStateEnter(); 
     }
     public sealed override void OnStateExit() { base.OnStateExit(); }
@@ -45,6 +46,11 @@ public class JumpingState : GroundState
     void SetAnim()
     {
         player.anim.Play(player.jumpState);
+    }
+
+    void PlayAudio()
+    {
+        player.SFX.PlayClip(player.SFX.jumpClip);
     }
 
     #endregion

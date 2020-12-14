@@ -30,8 +30,9 @@ public class Player : UnityMover
     public int dyingState = Animator.StringToHash("Dying");
     public int grabState = Animator.StringToHash("Grab");
     #endregion
+
     SpriteRenderer spriteRenderer = null;
-    
+    public PlayerAudio SFX = null;
     #endregion
 
     #region Unity Message Functions
@@ -55,7 +56,7 @@ public class Player : UnityMover
               
         //Make sure mario is using the proper sprite and rect size
         this.spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/mario");
-
+        this.SFX = GetComponent<PlayerAudio>();
         this.goalRect = goal;       
     }
 
@@ -143,15 +144,20 @@ public class Player : UnityMover
     }
 
     public override void HitBottom(UnityBlock b)
-    {
-        b.HitBottom();
-
-        if(!(this.groundState is FallingState))
+    {      
+        if (!(this.groundState is FallingState))
         {
             //Kill momentum
             mover.yMoveDir = -1;
+            b.HitBottom();
             base.HitBottom(b);
-        }    
+
+            if (b is BrickBlock)
+                SFX.PlayClip(SFX.blockClip);
+            else if (b is QuestionBlock)
+                SFX.PlayClip(SFX.coinClip);
+        }
+              
     }
 
     public override void HitBottom(UnityEntity e)
@@ -219,8 +225,8 @@ public class Player : UnityMover
     }
 
     void BounceOffGoomba()
-    {   
-        //Todo play sound
+    {
+        SFX.PlayClip(SFX.stompClip);
 
         mover.yMoveDir = jumpBurstStrength * 3;
         mover.SetState(ref groundState, new RisingState(this));
@@ -230,7 +236,8 @@ public class Player : UnityMover
 
     void GetCoin()
     {
-        //Todo Play sound
+        SFX.PlayClip(SFX.coinClip);
+
         ScoreService.Score += 100;
     }
     #endregion

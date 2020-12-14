@@ -33,10 +33,15 @@ public class TurningState : MoveState
     public sealed override void OnStateEnter() 
     {
         SetAnim();
+        StartAudio();
         SetStopTimeBasedOnCurrentSpeed();
         base.OnStateEnter(); 
     }
-    public sealed override void OnStateExit() { base.OnStateExit(); }
+    public sealed override void OnStateExit() 
+    {
+        StopAudio();
+        base.OnStateExit(); 
+    }
     #endregion
 
     #region Logic Functions
@@ -80,6 +85,19 @@ public class TurningState : MoveState
     {
         if(player.groundState is GroundedState)
             player.anim.Play(player.turnState);
+    }
+
+    void StartAudio()
+    {
+        player.SFX.Source.loop = true;
+        player.SFX.Source.clip = player.SFX.skidClip;
+        player.SFX.Source.Play();
+    }
+
+    void StopAudio()
+    {
+        player.SFX.Source.loop = false;
+        player.SFX.StopClip();
     }
 
     #endregion
