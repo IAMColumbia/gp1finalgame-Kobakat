@@ -20,7 +20,16 @@ public class GoombaMoveState : MoveState
         base.CheckForCollisionWithOtherEntities(goomba);
     }
 
-    public sealed override void OnStateEnter() { base.OnStateEnter(); }
+    public sealed override void OnStateEnter() 
+    {
+        SetAnim();
+        base.OnStateEnter(); 
+    }
     public sealed override void OnStateExit() { base.OnStateExit(); }
     #endregion
+
+    void SetAnim()
+    {
+        goomba.anim.Play(goomba.walkState);
+    }
 }

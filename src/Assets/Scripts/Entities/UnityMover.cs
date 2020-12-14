@@ -6,10 +6,11 @@ public abstract class UnityMover : UnityEntity
 {
     public Mover mover;
 
-    public List<UnityBlockChunk> unityChunks;
-    public List<UnityBlockChunk> unityBlockChunksCurrentlyIn;
+    public List<UnityBlockChunk> unityChunks { get; set; }
+    public List<UnityBlockChunk> unityBlockChunksCurrentlyIn { get; set; }
+    public List<UnityEntity> unityEntities { get; set; }
 
-    public List<UnityEntity> unityEntities;
+    public Animator anim;
 
     public virtual void Initialize(List<BlockChunk> Chunks, List<Entity> Entities, List<UnityBlockChunk> UnityChunks, List<UnityEntity> UnityEntities)
     {
@@ -19,6 +20,8 @@ public abstract class UnityMover : UnityEntity
         this.unityChunks = UnityChunks;
         this.unityBlockChunksCurrentlyIn = new List<UnityBlockChunk>();
         this.unityEntities = UnityEntities;
+
+        this.anim = GetComponent<Animator>();
     }
 
     //Block collisions

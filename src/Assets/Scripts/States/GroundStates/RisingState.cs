@@ -22,7 +22,11 @@ public class RisingState : GroundState
         base.StateUpdate();
     }
 
-    public sealed override void OnStateEnter() { base.OnStateEnter(); }
+    public sealed override void OnStateEnter() 
+    {
+        SetAnim();
+        base.OnStateEnter(); 
+    }
     public sealed override void OnStateExit() { base.OnStateExit(); }
     #endregion
 
@@ -37,6 +41,11 @@ public class RisingState : GroundState
     {
         if (player.mover.yMoveDir < 0)
             player.mover.SetState(ref player.groundState, new FallingState(player));
+    }
+
+    void SetAnim()
+    {
+        player.anim.Play(player.jumpState);
     }
     #endregion
 }

@@ -22,6 +22,7 @@ public class DyingState : GameState
     {
         SetTimes();
         SetInitialYDirection();
+        SetAnim();
         base.OnStateEnter();
     }
 
@@ -92,6 +93,10 @@ public class DyingState : GameState
             PlayerDied.Invoke();
     }
 
+    void SetAnim()
+    {
+        player.anim.Play(player.dyingState);
+    }
 
     public static event Action PlayerDied;
     #endregion

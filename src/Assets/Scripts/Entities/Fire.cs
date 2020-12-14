@@ -11,8 +11,6 @@ public class Fire : UnityEntity
     public sealed override void Initialize()
     {
         base.Initialize();
-
-        entity.rectDim = new Vector2(entity.rectDim.x * transform.localScale.x, entity.rectDim.y * transform.localScale.y);
     }
 
     void Update()

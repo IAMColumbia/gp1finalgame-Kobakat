@@ -26,8 +26,8 @@ public class GoalWalkState : MoveState
             {
                 hasHitBlock = true;
                 this.SetWalkSpeed();
+                this.SetAnim();
             }
-
         }
     }
 
@@ -57,5 +57,9 @@ public class GoalWalkState : MoveState
         player.mover.speed = 5.0f;
     }
 
+    void SetAnim()
+    {
+        player.anim.Play(player.walkState);
+    }
     #endregion
 }

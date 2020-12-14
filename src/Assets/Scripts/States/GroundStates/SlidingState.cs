@@ -20,6 +20,7 @@ public class SlidingState : GroundState
     public sealed override void OnStateEnter() 
     {
         PlayerController.Instance.Disable();
+        SetAnim();
         base.OnStateEnter(); 
     }
     public sealed override void OnStateExit() { base.OnStateExit(); }
@@ -29,6 +30,11 @@ public class SlidingState : GroundState
     void SetYMove()
     {
         player.mover.yMoveDir = -5.0f;
+    }
+
+    void SetAnim()
+    {
+        player.anim.Play(player.grabState);
     }
 
     #endregion

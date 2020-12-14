@@ -23,7 +23,11 @@ public sealed class MovementState : MoveState
         base.CheckForCollisionWithOtherEntities(player);
     }
 
-    public sealed override void OnStateEnter() { base.OnStateEnter(); }
+    public sealed override void OnStateEnter() 
+    { 
+        base.OnStateEnter();
+        SetAnim();
+    }
     public sealed override void OnStateExit() { base.OnStateExit(); }
     #endregion
 
@@ -58,6 +62,12 @@ public sealed class MovementState : MoveState
                 player.mover.SetState(ref player.moveState, new TurningState(player));
             }
         }
+    }
+
+    void SetAnim()
+    {
+        if(player.groundState is GroundedState)
+            player.anim.Play(player.walkState);
     }
     #endregion
 }

@@ -32,6 +32,7 @@ public class TurningState : MoveState
 
     public sealed override void OnStateEnter() 
     {
+        SetAnim();
         SetStopTimeBasedOnCurrentSpeed();
         base.OnStateEnter(); 
     }
@@ -73,6 +74,12 @@ public class TurningState : MoveState
         {
             player.mover.SetState(ref player.moveState, new MovementState(player));
         }
+    }
+
+    void SetAnim()
+    {
+        if(player.groundState is GroundedState)
+            player.anim.Play(player.turnState);
     }
 
     #endregion

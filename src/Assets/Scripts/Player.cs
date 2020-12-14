@@ -22,6 +22,14 @@ public class Player : UnityMover
     public float deathPauseTime = 1;
     public float winTime = 5;
 
+    #region State Hash
+    public int idleState = Animator.StringToHash("Idle");
+    public int walkState = Animator.StringToHash("Walking");
+    public int jumpState = Animator.StringToHash("Jumping");
+    public int turnState = Animator.StringToHash("Turning");
+    public int dyingState = Animator.StringToHash("Dying");
+    public int grabState = Animator.StringToHash("Grab");
+    #endregion
     SpriteRenderer spriteRenderer = null;
     
     #endregion
@@ -42,11 +50,9 @@ public class Player : UnityMover
         this.spriteRenderer = this.GetComponent<SpriteRenderer>();
 
         this.gameState = new PlayState(this);
-        this.moveState = new MovementState(this);
+        this.moveState = new IdleState(this);
         this.groundState = new GroundedState(this);
               
-        mover.speed = 0.1f;
-
         //Make sure mario is using the proper sprite and rect size
         this.spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/mario");
 
@@ -107,13 +113,10 @@ public class Player : UnityMover
     }
     void UpdateSpriteDirection()
     {
-        if (!(this.moveState is TurningState))
-        {
-            if (mover.xMoveDir > 0)
-                this.spriteRenderer.flipX = false;
-            else if (mover.xMoveDir < 0)
-                this.spriteRenderer.flipX = true;
-        }
+        if (mover.xMoveDir > 0)
+            this.spriteRenderer.flipX = false;
+        else if (mover.xMoveDir < 0)
+            this.spriteRenderer.flipX = true;
     }
 
     void CheckIfOutOfBounds()

@@ -25,6 +25,7 @@ public class JumpingState : GroundState
     public sealed override void OnStateEnter() 
     {
         SetUpwardsVelocity();
+        SetAnim();
         base.OnStateEnter(); 
     }
     public sealed override void OnStateExit() { base.OnStateExit(); }
@@ -39,6 +40,11 @@ public class JumpingState : GroundState
     void ApplyDeltaJump()
     {
         player.mover.yMoveDir += player.jumpDeltaStrength * Time.deltaTime;
+    }
+
+    void SetAnim()
+    {
+        player.anim.Play(player.jumpState);
     }
 
     #endregion

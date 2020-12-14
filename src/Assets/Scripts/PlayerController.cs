@@ -70,11 +70,10 @@ public class PlayerController : MonoBehaviour
 
             else
             {
-                if (!(player.moveState is StoppingState))
+                if (!(player.moveState is StoppingState) && !(player.moveState is IdleState))
                     player.mover.SetState(ref player.moveState, new StoppingState(player));
             }
         }
-        
     }
 
     #endregion

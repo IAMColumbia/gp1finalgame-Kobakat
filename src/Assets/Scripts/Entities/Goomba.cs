@@ -10,6 +10,8 @@ public class Goomba : UnityMover
     public float maxSpeed = 5;
     public float maxFallSpeed = 5;
     public float gravityStrength = 3;
+
+    public int walkState = Animator.StringToHash("Goomba");
     public override void Initialize(List<BlockChunk> Chunks, List<Entity> Entities, List<UnityBlockChunk> UnityChunks, List<UnityEntity> UnityEntities)
     {
         base.Initialize(Chunks, Entities, UnityChunks, UnityEntities);

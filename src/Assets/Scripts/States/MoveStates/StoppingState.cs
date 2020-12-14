@@ -26,11 +26,13 @@ public class StoppingState : MoveState
         base.UpdateRectAndCheckForCollisions(player);
         base.CheckForCollisionWithOtherEntities(player);
 
+        CheckIfStopped();
     }
 
     public sealed override void OnStateEnter() 
     {
         SetStopTimeBasedOnCurrentSpeed();
+        SetAnim();
         base.OnStateEnter(); 
     }
     public sealed override void OnStateExit() { base.OnStateExit(); }
@@ -50,6 +52,20 @@ public class StoppingState : MoveState
     {
         this.startTime = Time.time;
         this.stopTime = Mathf.Abs((player.mover.speed / (player.maxSpeed * player.frictionStrength)));
+    }
+
+    void CheckIfStopped()
+    {
+        if(Mathf.Abs(player.mover.speed) <= Utility.epsilon)
+        {
+            player.mover.SetState(ref player.moveState, new IdleState(player));
+        }
+    }
+
+    void SetAnim()
+    {
+        if(player.groundState is GroundedState)
+            player.anim.Play(player.walkState);
     }
     #endregion
 }

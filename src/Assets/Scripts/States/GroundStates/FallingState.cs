@@ -17,7 +17,11 @@ public class FallingState : GroundState
         base.StateUpdate();
     }
 
-    public sealed override void OnStateEnter() { base.OnStateEnter(); }
+    public sealed override void OnStateEnter() 
+    {
+        SetAnim();
+        base.OnStateEnter(); 
+    }
     public sealed override void OnStateExit() { base.OnStateExit(); }
     #endregion
 
@@ -26,6 +30,11 @@ public class FallingState : GroundState
     {
         player.mover.yMoveDir -= player.gravityStrength * Time.deltaTime;
         player.mover.yMoveDir = Mathf.Clamp(player.mover.yMoveDir, -player.maxFallSpeed, 5000f);
+    }
+
+    void SetAnim()
+    {
+        player.anim.Play(player.jumpState);
     }
 
     #endregion

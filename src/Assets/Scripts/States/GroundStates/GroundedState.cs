@@ -20,8 +20,17 @@ public class GroundedState : GroundState
     public sealed override void OnStateEnter() 
     {
         player.mover.yMoveDir = 0;
+        SetAnim();
         base.OnStateEnter(); 
     }
     public sealed override void OnStateExit() { base.OnStateExit(); }
     #endregion
+
+    void SetAnim()
+    {
+        if (player.moveState is IdleState)
+            player.anim.Play(player.idleState);
+        else
+            player.anim.Play(player.walkState);
+    }
 }
