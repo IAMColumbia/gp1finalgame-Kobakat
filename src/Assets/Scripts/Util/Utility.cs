@@ -80,6 +80,26 @@ public class Utility : MonoBehaviour
     }
 
     /// <summary>
+    /// Epsilon can ruin chunk calculations so this version removes it
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    public static bool ChunkIntersect(Rect a, Rect b)
+    {
+        if (
+            a.x + (a.width / 2.0f) < b.x - (b.width / 2.0f)
+            || a.y + (a.height / 2.0f) < b.y - (b.height / 2.0f)
+            || b.x + (b.width / 2.0f) < a.x - (a.width / 2.0f)
+            || b.y + (b.height / 2.0f) < a.y - (a.height / 2.0f))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
     /// Returns the minimum angle (in degrees) that two rects can collide with one another
     /// Before they are determined to be colliding on the sides instead of top/bottom
     /// </summary>

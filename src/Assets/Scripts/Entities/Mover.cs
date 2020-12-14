@@ -71,7 +71,7 @@ public class Mover : IMover
         if (side < 0)
         {
             entity.position = new Vector3(
-                b.rect.position.x - (b.rect.width / 2.0f) - (entity.rectDim.x / 2.0f),
+                b.rect.position.x - (b.rect.width / 2.0f) - (entity.rectDim.x / 2.0f) - Utility.epsilon,
                 entity.position.y,
                 0);
         }
@@ -80,7 +80,7 @@ public class Mover : IMover
         else
         {
             entity.position = new Vector3(
-                b.rect.position.x + (b.rect.width / 2.0f) + (entity.rectDim.x / 2.0f),
+                b.rect.position.x + (b.rect.width / 2.0f) + (entity.rectDim.x / 2.0f) + Utility.epsilon,
                 entity.position.y,
                 0);
         }
@@ -116,7 +116,7 @@ public class Mover : IMover
         if (side < 0)
         {
             entity.position = new Vector3(
-                e.position.x - (entity.rectDim.x / 2.0f) - (entity.rectDim.x / 2.0f),
+                e.position.x - (entity.rectDim.x / 2.0f) - (entity.rectDim.x / 2.0f) - Utility.epsilon,
                 entity.position.y,
                 0);
         }
@@ -125,7 +125,7 @@ public class Mover : IMover
         else
         {
             entity.position = new Vector3(
-                e.position.x + (e.rectDim.x / 2.0f) + (entity.rectDim.x / 2.0f),
+                e.position.x + (e.rectDim.x / 2.0f) + (entity.rectDim.x / 2.0f) + Utility.epsilon,
                 entity.position.y,
                 0);
         }

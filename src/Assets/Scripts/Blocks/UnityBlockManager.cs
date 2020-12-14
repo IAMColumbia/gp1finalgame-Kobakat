@@ -71,7 +71,7 @@ public class UnityBlockManager : MonoBehaviour
         float finalChunkBuffer = 0;
 
         //Make the width ever so slightly less so it doesn't include neighboring chunk blocks
-        width -= chunkBuffer - Utility.epsilon;
+        width -= chunkBuffer;
 
         for (int i = 0; i < chunkCount; i++)
         {
@@ -91,7 +91,7 @@ public class UnityBlockManager : MonoBehaviour
                 this.transform.rotation,
                 this.transform).GetComponent<UnityBlockChunk>();
 
-            newChunk.Initialize(width, height);
+            newChunk.Initialize(width - Utility.epsilon, height);
 
             this.unityBlockChunks.Add(newChunk.GetComponent<UnityBlockChunk>());
             manager.chunks.Add(newChunk.GetComponent<UnityBlockChunk>().chunk);
@@ -105,7 +105,7 @@ public class UnityBlockManager : MonoBehaviour
         {
             foreach (UnityBlock b in this.unityBlocks)
             {
-                if (Utility.Intersectcs(c.chunk.rect, b.block.rect))
+                if (Utility.ChunkIntersect(c.chunk.rect, b.block.rect))
                 {
                     c.unityBlocks.Add(b);
                     c.chunk.blocks.Add(b.block);                  

@@ -15,7 +15,7 @@ public class GoombaMoveState : MoveState
     public sealed override void StateUpdate()
     {
         base.CheckForChunksCurrentlyIn(goomba);;
-        base.UpdatePosition(goomba);
+        base.UpdatePosition(goomba);     
         base.UpdateRectAndCheckForCollisions(goomba);
         base.CheckForCollisionWithOtherEntities(goomba);
     }

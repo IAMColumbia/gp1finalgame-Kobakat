@@ -7,7 +7,7 @@ public class BrickBlock : UnityBlock
     public float bumpSpeed = 10;
     public float maxHeight = 0.1f;
     
-    bool isHit = false;
+    public bool isHit = false;
     bool isReturning = false;
 
     float initialHeight;

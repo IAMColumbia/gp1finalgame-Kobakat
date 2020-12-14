@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QuestionBlock : UnityBlock
 {
-    bool struck = false;
+    public bool struck = false;
 
     public float bumpSpeed = 10;
     public float maxHeight = 0.1f;

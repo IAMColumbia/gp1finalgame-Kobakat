@@ -147,15 +147,25 @@ public class Player : UnityMover
     {      
         if (!(this.groundState is FallingState))
         {
-            //Kill momentum
             mover.yMoveDir = -1;
-            b.HitBottom();
+            
             base.HitBottom(b);
 
             if (b is BrickBlock)
-                SFX.PlayClip(SFX.blockClip);
+            {
+                BrickBlock brick = (BrickBlock)b;
+                if(!brick.isHit)
+                    SFX.PlayClip(SFX.blockClip);
+            }
+                
             else if (b is QuestionBlock)
-                SFX.PlayClip(SFX.coinClip);
+            {
+                QuestionBlock question = (QuestionBlock)b;
+                if (!question.struck)
+                    SFX.PlayClip(SFX.coinClip);
+            }
+            
+            b.HitBottom();
         }
               
     }

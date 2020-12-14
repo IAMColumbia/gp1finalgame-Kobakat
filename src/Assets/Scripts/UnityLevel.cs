@@ -18,8 +18,9 @@ public class UnityLevel : MonoBehaviour
     #region Unity Event Functions
     void Awake()
     {
-        ScoreService.NewGame(this.maps.Length);
+        ScoreService.NewGame(this.maps.Length);      
         this.music = GetComponent<LevelAudio>();
+        this.music.Initialize();
         Initialize();
     }
 

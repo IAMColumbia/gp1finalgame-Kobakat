@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2df4b4f3b0c6dc4596d2fee093bbb8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unityBlockChunksCurrentlyIn: []
   anim: {fileID: 0}
   acceleration: 5
   maxSpeed: 20
@@ -107,7 +108,7 @@ MonoBehaviour:
   maxFallSpeed: 20
   airborneMovementDamp: 0.75
   deathTime: 4
-  deathPauseTime: 0.5
+  deathPauseTime: 0.75
   winTime: 9
   idleState: 2081823275
   walkState: 1744665739
@@ -140,6 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6695a3cebf0ccfa41a716f868f571185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Source: {fileID: 0}
   jumpClip: {fileID: 8300000, guid: b48420796e9009344ae0ca6752223d2a, type: 3}
   dieClip: {fileID: 8300000, guid: b6205d3eebaf8904494dfb282079f87f, type: 3}
   coinClip: {fileID: 8300000, guid: 5fdf0872d5249804784b80ef49707069, type: 3}
@@ -147,7 +149,7 @@ MonoBehaviour:
   blockClip: {fileID: 8300000, guid: 30a4d57114e9927408e2bcd1f492b261, type: 3}
   skidClip: {fileID: 8300000, guid: 846526b57cda8b448838c52cf74f5cd2, type: 3}
   priority: 128
-  volume: 0.85
+  volume: 0.5
 --- !u!95 &-5523266332090241790
 Animator:
   serializedVersion: 3

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ScoreService : MonoBehaviour
 {
-    public static int startingLives = 4;
+    public static int startingLives = 10;
     public static int levelTime = 200;
     public static int pointsPerExtraSecond = 10;
 
@@ -45,7 +45,7 @@ public class ScoreService : MonoBehaviour
         Lives = startingLives;
         Timer = levelTime;
         Level = 0;
-
+        scoreOnLevelStart = 0;
         maxLevels = MaxLevels;
     }
 

@@ -34,7 +34,8 @@ public class FallingState : GroundState
 
     void SetAnim()
     {
-        player.anim.Play(player.jumpState);
+        if(!(player.gameState is DyingState))
+            player.anim.Play(player.jumpState);
     }
 
     #endregion

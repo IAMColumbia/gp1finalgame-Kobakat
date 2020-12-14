@@ -15,7 +15,8 @@ public class LevelAudio : MonoBehaviour
 
     #endregion
 
-    private void Awake()
+
+    public void Initialize()
     {
         Source = gameObject.AddComponent<AudioSource>();
         Source.priority = priority;

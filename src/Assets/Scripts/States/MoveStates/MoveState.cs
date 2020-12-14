@@ -72,15 +72,19 @@ public abstract class MoveState: State, IMoveState
         {           
             if(Utility.Intersectcs(m.entity.rect, c.chunk.rect))
             {
-                int index;
+                
                 m.unityBlockChunksCurrentlyIn.Add(c);
+               
+                //Adds neighboring chunks into collision check. Maybe this can be used for something
+                
+                /*int index;
                 index = m.unityChunks.IndexOf(c);
 
                 if(m.unityChunks.IndexOf(c) != m.unityChunks.Count - 1)
                     m.unityBlockChunksCurrentlyIn.Add(m.unityChunks[index + 1]);
 
                 if(m.unityChunks.IndexOf(c) != 0)
-                    m.unityBlockChunksCurrentlyIn.Add(m.unityChunks[index - 1]);
+                    m.unityBlockChunksCurrentlyIn.Add(m.unityChunks[index - 1]);*/
             }
         }
     }
